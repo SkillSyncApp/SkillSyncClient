@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Discover from "../views/discover/Discover";
+import Login from "../views/login/Login";
 
 export const router = createBrowserRouter([
     {
@@ -13,4 +14,8 @@ export const router = createBrowserRouter([
             { path: '/', element: <Discover /> }
         ]
     },
+    {
+        path: "/login",
+        element: <Login/>
+    }
 ]);

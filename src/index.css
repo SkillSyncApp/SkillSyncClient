@@ -12,6 +12,8 @@
   background-color: #242424;
 
   --color-primary: #050F22;
+  --color-lightgray: #EFEFEF;
+  --color-text-gray: #5b5b5b;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,5 +36,18 @@ body, #root {
 
   .circle {
     @apply rounded-full;
+  }
+
+  .divider {
+    @apply w-full opacity-20 h-[1px] bg-primary;
+  }
+
+  input {
+    outline: none;
+    @apply rounded-md py-3 px-3 bg-lightgray text-gray w-full;
+  }
+
+  button {
+    @apply px-2 py-3 rounded-md bg-primary text-white hover:shadow-md transform;
   }
 }
