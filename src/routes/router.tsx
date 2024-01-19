@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Discover from "../views/discover/Discover";
 import Login from "../views/login/Login";
+import Inbox from "../views/inbox/Inbox";
 
 export const router = createBrowserRouter([
     {
@@ -10,7 +11,7 @@ export const router = createBrowserRouter([
         // TODO: implement error page
         errorElement: <div>error</div>,
         children: [
-            { path: '/inbox', element: <div>inbox</div> },
+            { path: '/inbox', element: <Inbox/> },
             { path: '/', element: <Discover /> }
         ]
     },
