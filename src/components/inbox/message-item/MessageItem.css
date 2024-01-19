@@ -1,0 +1,39 @@
+.message-wrapper {
+  width: fit-content;
+}
+
+.message-wrapper.other {
+  --background-color: white;
+  --text-color: var(--color-primary);
+}
+
+.message-wrapper.me {
+  --background-color: var(--color-primary);
+  --text-color: white;
+}
+
+.message {
+  flex: 1;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.message-wrapper::after {
+  position: absolute;
+  content: "";
+  width: 20px;
+  height: 20px;
+  background: var(--background-color);
+  /* clip-path: polygon(0% 50%, 100% 0%, 100% 100%, 0% 50%); */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 0%);
+  top:  0;
+}
+
+.message-wrapper.other::after {
+  left: -13px;
+}
+
+.message-wrapper.me::after {
+  transform: rotateY(180deg);
+  right: -13px;
+}
