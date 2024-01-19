@@ -1,6 +1,7 @@
 import './SideNavBar.css';
 import { Squares2X2Icon as Squares2X2IconOutlined, ChatBubbleOvalLeftIcon as ChatBubbleOvalLeftIconOutlined } from '@heroicons/react/24/outline';
 import { Squares2X2Icon as Squares2X2IconSolid, ChatBubbleOvalLeftIcon as ChatBubbleOvalLeftIconSolid } from '@heroicons/react/24/solid';
+import { Link } from 'react-router-dom';
 
 const ICON_PER_STATE = {
     discover: {
@@ -15,8 +16,8 @@ const ICON_PER_STATE = {
 
 function SideNavBar() {
     return <nav className="flex flex-col p-4 text-[18px] gap-2">
-        <div className="nav-item active cursor-pointer">{ICON_PER_STATE.discover.active}Discover</div>
-        <div className="nav-item cursor-pointer">{ICON_PER_STATE.inbox.static}Inbox</div>
+        <Link to='/' className="nav-item active cursor-pointer">{ICON_PER_STATE.discover.active}Discover</Link>
+        <Link to='/inbox' className="nav-item cursor-pointer">{ICON_PER_STATE.inbox.static}Inbox</Link>
     </nav>
 }
 
