@@ -1,0 +1,21 @@
+@layer nav-items-components {
+    .nav-item {
+        @apply px-4 py-4 flex gap-2 rounded-lg;
+    }
+}
+
+.nav-item {
+    transition: background-color .1s;
+    color: #4e4e4e;
+    font-weight: 500;
+}
+
+.nav-item.active {
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 6 00;
+}
+
+.nav-item:not(.active):hover {
+    background-color: lightgray;
+}
