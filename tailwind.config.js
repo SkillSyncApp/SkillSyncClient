@@ -8,6 +8,8 @@ export default {
     extend: {
       colors: {
         primary: 'var(--color-primary)',
+        lightgray: 'var(--color-lightgray)',
+        gray: 'var(--color-text-gray)'
       },
     },
     fontFamily: {
