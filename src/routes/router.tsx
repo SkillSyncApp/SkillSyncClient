@@ -3,6 +3,7 @@ import App from "../App";
 import Discover from "../views/discover/Discover";
 import Login from "../views/login/Login";
 import Inbox from "../views/inbox/Inbox";
+import Profile from "../views/profile/Profile";
 
 export const router = createBrowserRouter([
     {
@@ -11,8 +12,9 @@ export const router = createBrowserRouter([
         // TODO: implement error page
         errorElement: <div>error</div>,
         children: [
+            { path: '/', element: <Discover /> },
             { path: '/inbox', element: <Inbox/> },
-            { path: '/', element: <Discover /> }
+            { path: '/profile', element: <Profile/> },
         ]
     },
     {
