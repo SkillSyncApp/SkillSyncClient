@@ -4,7 +4,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import FacebookIcon from '../../icons/FacebookIcon';
 import GoogleIcon from '../../icons/GoogleIcon';
-import { login as loginRequest } from '../../services/authService';
+import { login as loginRequest, saveTokens } from '../../services/authService';
 import { useState } from 'react';
 import toast, { Toaster } from "react-hot-toast";
 import './Login.css';
@@ -20,11 +20,13 @@ function Login() {
 
     const login = async () => {
         try {
-            await loginMutation.mutateAsync({
+            const { data: loginRes } = await loginMutation.mutateAsync({
                 email,
                 password
             });
+            saveTokens({ accessToken: loginRes.accessToken, refreshToken: loginRes.refreshToken });
             toast.success('Logged in successfully');
+
             navigate('/', { replace: true });
         } catch (err) {
             toast.error('Login failed');
