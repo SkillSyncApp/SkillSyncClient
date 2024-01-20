@@ -3,9 +3,10 @@ import { Post } from "../../types/Post";
 
 type PostItemProps = {
     post: Post;
+    onCommentClick: () => void;
 }
 
-function PostItem({ post }: PostItemProps) {
+function PostItem({ post, onCommentClick }: PostItemProps) {
 
     return <article className="rounded-[20px] bg-white flex flex-col p-6 h-fit gap-3 drop-shadow-xl">
         <img
@@ -20,7 +21,7 @@ function PostItem({ post }: PostItemProps) {
         </div>
         <p className="opacity-60">{post.content}</p>
         <div className="flex gap-3">
-            <span className="py-1 px-2 cursor-pointer bg-[lightgray] rounded-lg flex items-center gap-2">
+            <span onClick={onCommentClick} className="py-1 px-2 cursor-pointer bg-[lightgray] rounded-lg flex items-center gap-2">
                 <ChatBubbleBottomCenterTextIcon width={22} height={22} className='opacity-70' />
                 <span className='text-[14px] opacity-70'>140</span>
             </span>
