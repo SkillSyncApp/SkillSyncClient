@@ -3,9 +3,13 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { logout as logoutRequest, resetTokens } from '../../services/authService';
 import toast from 'react-hot-toast';
+import { userState } from '../../store/atoms/userAtom';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 function Profile() {
     const navigate = useNavigate();
+    const user = useRecoilValue(userState);
+    const resetUserState = useResetRecoilState(userState);
 
     const logoutMutation = useMutation(logoutRequest);
 
@@ -13,6 +17,7 @@ function Profile() {
         try {
             await logoutMutation.mutateAsync();
             resetTokens();
+            resetUserState();
             navigate('/login', { replace: true });
         } catch (err) {
             toast.error('Failed to sign out');
@@ -20,10 +25,10 @@ function Profile() {
     };
 
     return <div className="flex-1 bg-lightgray flex flex-col items-center p-[70px]">
-        <img className="circle w-[200px] h-[200px] object-cover drop-shadow-lg" src="https://variety.com/wp-content/uploads/2022/11/Harry-Styles.jpg?w=1000" />
-        <h2 className="pt-5 font-bold text-2xl">Amit Brickman</h2>
-        <h4 className="opacity-60">amitbrickman@gmail.com</h4>
-        <p className="opacity-80 max-w-[400px] mt-5 text-[14px] text-center">haretra diam. Etiam dignissim diam quis enim lobortis. Nec dui nunc mattis enim. Ullamcorper eget nulla facilisi etiam dignissim. Magna sit amet purus gravida quis blandit turpis cursus. Et ultrices neque ornare aenean euismod elementum. Nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi. Blandit libero volutpat sed cras. Purus viverra accumsan in nisl nisi. Fringilla ut morbi tincidunt augue interdum velit euismod in. V</p>
+        <img className="circle w-[200px] h-[200px] object-cover drop-shadow-lg" src={user?.image || "https://variety.com/wp-content/uploads/2022/11/Harry-Styles.jpg?w=1000"} />
+        <h2 className="pt-5 font-bold text-2xl">{user.name}</h2>
+        <h4 className="opacity-60">{user.email}</h4>
+        <p className="opacity-80 max-w-[400px] mt-5 text-[14px] text-center">{user.bio}</p>
         <div onClick={logout} className="mt-auto flex gap-1 items-center text-[#d9455c] cursor-pointer transition"><SignOutIconOutlined width={18} />Sign out</div>
     </div>
 }

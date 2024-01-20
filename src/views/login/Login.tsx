@@ -1,16 +1,20 @@
+import { useState } from 'react';
+import toast, { Toaster } from "react-hot-toast";
 import {
     useMutation
 } from 'react-query';
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from 'recoil';
 import FacebookIcon from '../../icons/FacebookIcon';
 import GoogleIcon from '../../icons/GoogleIcon';
 import { login as loginRequest, saveTokens } from '../../services/authService';
-import { useState } from 'react';
-import toast, { Toaster } from "react-hot-toast";
+import { userState } from '../../store/atoms/userAtom';
 import './Login.css';
 
 function Login() {
     const navigate = useNavigate();
+
+    const setUser = useSetRecoilState(userState);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,6 +29,7 @@ function Login() {
                 password
             });
             saveTokens({ accessToken: loginRes.accessToken, refreshToken: loginRes.refreshToken });
+            setUser(loginRes.user);
             toast.success('Logged in successfully');
 
             navigate('/', { replace: true });
