@@ -1,7 +1,7 @@
 import { ArrowLeftStartOnRectangleIcon as SignOutIconOutlined } from '@heroicons/react/24/outline';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { logout as logoutRequest } from '../../services/authService';
+import { logout as logoutRequest, resetTokens } from '../../services/authService';
 import toast from 'react-hot-toast';
 
 function Profile() {
@@ -12,6 +12,7 @@ function Profile() {
     const logout = async () => {
         try {
             await logoutMutation.mutateAsync();
+            resetTokens();
             navigate('/login', { replace: true });
         } catch (err) {
             toast.error('Failed to sign out');
