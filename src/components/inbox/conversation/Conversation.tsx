@@ -2,7 +2,7 @@ import { Message } from "../../../types/Message";
 import MessageItem from "../message-item/MessageItem";
 
 type ConversationProps = {
-    messages: Message[]
+    messages: Message[];
 }
 
 function Conversation({ messages }: ConversationProps) {

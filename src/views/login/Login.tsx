@@ -10,7 +10,7 @@ function Login() {
         navigate('/', { replace: true });
     };
 
-    return <div className="bg-lightgray h-[100vh] bg-primary flex items-center justify-center flex flex-col font-display">
+    return <div className="h-[100vh] bg-primary flex items-center justify-center flex flex-col font-display">
         <div className="w-[500px] bg-white rounded-[20px] drop-shadow-lg p-[40px]">
             <h1 className="text-2xl mb-3 font-bold">Login</h1>
             <div className='mb-3'>
