@@ -1,13 +1,35 @@
+import {
+    useMutation
+} from 'react-query';
+import { useNavigate } from "react-router-dom";
 import FacebookIcon from '../../icons/FacebookIcon';
 import GoogleIcon from '../../icons/GoogleIcon';
-import { useNavigate } from "react-router-dom";
+import { login as loginRequest } from '../../services/authService';
+import { useState } from 'react';
+import toast, { Toaster } from "react-hot-toast";
 import './Login.css';
 
 function Login() {
     const navigate = useNavigate();
 
-    const login = () => {
-        navigate('/', { replace: true });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const loginMutation = useMutation(({ email, password }: { email: string, password: string }) =>
+        loginRequest(email, password));
+
+    const login = async () => {
+        try {
+            await loginMutation.mutateAsync({
+                email,
+                password
+            });
+            toast.success('Logged in successfully');
+            navigate('/', { replace: true });
+        } catch (err) {
+            toast.error('Login failed');
+            console.log(err)
+        }
     };
 
     return <div className="h-[100vh] bg-primary flex items-center justify-center flex flex-col font-display">
@@ -15,11 +37,11 @@ function Login() {
             <h1 className="text-2xl mb-3 font-bold">Login</h1>
             <div className='mb-3'>
                 <label htmlFor="email" className="block mb-2 text-sm text-gray-700">Email</label>
-                <input id="email" />
+                <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div>
                 <label htmlFor="password" className="block mb-2 text-sm text-gray-700">Password</label>
-                <input id="password" type="password" />
+                <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <button onClick={login} className='mt-4 w-full'>Login</button>
             <div className='mb-6 mt-5 flex items-center'>
@@ -38,6 +60,7 @@ function Login() {
                 </div>
             </div>
         </div>
+        <Toaster />
     </div>
 }
 
