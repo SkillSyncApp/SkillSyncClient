@@ -5,6 +5,6 @@ export type User ={
     email: string;
     name: string;
     type: UserType;
-    image: string;
+    image?: string;
     bio: string;
-}
+};

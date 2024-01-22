@@ -5,7 +5,7 @@ import apiClient from "./httpCommon";
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
-const headers = () => {
+export const headers = () => {
     const tokens = getTokens();
     if (tokens.refreshToken) {
         return {
