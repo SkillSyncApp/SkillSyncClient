@@ -1,12 +1,11 @@
 import { ArrowLeftStartOnRectangleIcon as SignOutIconOutlined } from '@heroicons/react/24/outline';
+import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { logout as logoutRequest, resetTokens } from '../../services/authService';
-import toast from 'react-hot-toast';
-import { userState } from '../../store/atoms/userAtom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import DefaultProfileImage from '../../assets/images/profile-image.png';
 import ProfileImage from '../../components/profile-image/ProfileImage';
+import { logout as logoutRequest, resetTokens } from '../../services/authService';
+import { userState } from '../../store/atoms/userAtom';
 
 function Profile() {
     const navigate = useNavigate();

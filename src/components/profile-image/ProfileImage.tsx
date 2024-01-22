@@ -7,7 +7,7 @@ type ProfileImageProps = {
 }
 
 function ProfileImage({ src, className = "" }: ProfileImageProps) {
-    return <img className={classnames("circle", className)} src={src || DefaultProfileImage}/>
+    return <img className={classnames("circle object-cover", className)} src={src || DefaultProfileImage}/>
 }
 
 export default ProfileImage;

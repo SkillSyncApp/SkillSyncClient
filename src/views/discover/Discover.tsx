@@ -6,12 +6,13 @@ import PostItem from "../../components/post-item/PostItem";
 import { getPosts } from '../../services/postService';
 import { Post } from '../../types/Post';
 import './Discover.css';
+import { GET_ALL_POSTS } from '../../query-keys/queries';
 
 function Discover() {
     const [selectedPost, setSelectedPost] = useState<Post>();
     const [showCommentsPanel, setShowCommentsPanel] = useState(false);
 
-    const { data } = useQuery('posts', getPosts, { staleTime: Infinity });
+    const { data } = useQuery(GET_ALL_POSTS, getPosts, { staleTime: Infinity });
     const posts = data?.data || [];
 
     const showComments = (post: Post) => {
