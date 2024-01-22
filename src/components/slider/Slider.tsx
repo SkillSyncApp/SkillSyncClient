@@ -66,7 +66,7 @@ function Slider({ show, onClose, title, children }: SliderProps) {
                         {title}
                       </Dialog.Title>
                     </div>
-                      <div className="relative mt-6 flex-1 px-4 sm:px-6 overflow-y-scroll">
+                      <div className="relative mt-6 flex flex-1 px-4 sm:px-6 overflow-hidden">
                         {children}
                       </div>
                   </div>

@@ -42,7 +42,7 @@ body, #root {
     @apply w-full opacity-20 h-[1px] bg-primary;
   }
 
-  input {
+  input, textarea {
     outline: none;
     @apply rounded-md py-3 px-3 bg-lightgray text-gray w-full;
   }
