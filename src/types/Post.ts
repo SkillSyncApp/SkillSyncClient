@@ -1,6 +1,12 @@
-// import { User } from "./User";
+import { User } from "./User";
+
+type PostOwner = Pick<User, 'name' | 'type' | 'image' >;
 
 export type Post = {
-    // user: User;
-    content: string;
+    _id: string,
+    ownerId: PostOwner,
+    title: string,
+    content: string,
+    image?: string,
+    commentsCount: number
 }

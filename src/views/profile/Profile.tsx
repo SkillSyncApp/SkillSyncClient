@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { userState } from '../../store/atoms/userAtom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import DefaultProfileImage from '../../assets/images/profile-image.png';
+import ProfileImage from '../../components/profile-image/ProfileImage';
 
 function Profile() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Profile() {
     };
 
     return <div className="flex-1 bg-lightgray flex flex-col items-center p-[70px]">
-        <img className="circle w-[200px] h-[200px] object-cover drop-shadow-lg" src={user.image || DefaultProfileImage} />
+        <ProfileImage src={user.image} className='w-[200px] h-[200px] object-cover drop-shadow-lg' />
         <h2 className="pt-5 font-bold text-2xl">{user.name}</h2>
         <h4 className="opacity-60">{user.email}</h4>
         <p className="opacity-80 max-w-[400px] mt-5 text-[14px] text-center">{user.bio}</p>
