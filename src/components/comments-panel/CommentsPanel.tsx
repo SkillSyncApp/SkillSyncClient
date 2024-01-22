@@ -47,13 +47,19 @@ function CommentsPanel({ show, post, onClose }: CommentsPanelProps) {
                 await addCommentMutation.mutateAsync({ content: newCommentContent });
                 toast.success('Comment added successfully');
                 setNewCommentContent("");
-                setTimeout(() =>{
-                    commentsWrapperRef.current?.scrollTo({ top: 100000, behavior: "smooth" });
+
+                setTimeout(() => {
+                    scrollToBottomOfComments();
                 }, 500);
             } catch (err) {
                 toast.error('Failed to add comment. Please try again');
             }
         }
+    }
+
+    const scrollToBottomOfComments = () => {
+        const lastCommentElement = commentsWrapperRef.current?.lastElementChild?.lastElementChild;
+        lastCommentElement?.scrollIntoView({ behavior: 'smooth' });
     }
 
     return <Slider show={show} onClose={onClose} title={`${post?.ownerId.name}'s post`}>
