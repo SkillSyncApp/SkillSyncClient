@@ -48,6 +48,14 @@ body, #root {
   }
 
   button {
-    @apply px-2 py-3 rounded-md bg-primary text-white hover:shadow-md transform;
+    @apply px-2 py-3 rounded-md bg-primary text-white hover:shadow-md transition-all;
+  }
+
+  button.secondary {
+    @apply bg-lightgray text-gray hover:shadow-none;
+  }
+
+  button.light {
+    @apply bg-transparent text-gray hover:bg-lightgray hover:shadow-none;
   }
 }

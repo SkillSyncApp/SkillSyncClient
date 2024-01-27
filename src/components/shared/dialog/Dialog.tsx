@@ -1,4 +1,5 @@
-import { Transition, Dialog as HeadledssDialog } from "@headlessui/react";
+import { Dialog as HeadledssDialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import React, { Fragment } from "react";
 
 type DialogProps = {
@@ -38,9 +39,10 @@ function Dialog({ show, onClose, title, children }: DialogProps) {
 						<HeadledssDialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
 							<HeadledssDialog.Title
 								as="h3"
-								className="text-lg font-medium leading-6 text-gray-900"
+								className="text-lg font-medium leading-6 text-gray-900 flex items-center"
 							>
 								{title}
+								<XMarkIcon onClick={onClose} className="ml-auto h-[20px] w-[20px] cursor-pointer" />
 							</HeadledssDialog.Title>
 							{children}
 						</HeadledssDialog.Panel>

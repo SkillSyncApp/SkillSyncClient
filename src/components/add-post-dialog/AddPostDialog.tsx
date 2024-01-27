@@ -17,11 +17,18 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
+    const uploadFile = ({ target }: { target: HTMLInputElement }) => {
+        if (target.files?.length) {
+            const [file] = target.files;
+            console.log(URL.createObjectURL(file));
+        }
+    };
+
     const addPostMutation = useMutation((post: CreatePostInput) =>
         addPost(post), {
-            onSettled: () => {
-                queryClient.invalidateQueries(GET_ALL_POSTS);
-            }
+        onSettled: () => {
+            queryClient.invalidateQueries(GET_ALL_POSTS);
+        }
     });
 
     const add = async () => {
@@ -42,9 +49,13 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
             </div>
             <div>
                 <label htmlFor="content" className="block mb-2 text-sm text-gray-700">Content</label>
-                <textarea rows={4} id="content" value={content} onChange={(e) => setContent(e.target.value)} className="resize-none"/>
+                <textarea rows={4} id="content" value={content} onChange={(e) => setContent(e.target.value)} className="resize-none" />
             </div>
-            <button onClick={add}>Done</button>
+            <div >
+                <label htmlFor="image" className="block mb-2 text-sm text-gray-700">Image (optional)</label>
+                <input id="image" type="file" onChange={uploadFile} />
+            </div>
+            <button onClick={add} className="mt-4">Done</button>
         </div>
     </Dialog>
 }
