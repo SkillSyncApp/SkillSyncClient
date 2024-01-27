@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addComment, getComments } from '../../services/commentService';
 import { Post } from '../../types/Post';
 import PostItem from '../post-item/PostItem';
-import Slider from '../slider/Slider';
+import Slider from '../shared/slider/Slider';
 import CommentItem from './comment-item/CommentItem';
 import { useRecoilValue } from 'recoil';
 import { userIdSelector } from '../../store/atoms/userAtom';
