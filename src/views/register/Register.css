@@ -1,0 +1,29 @@
+.mb-3 label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.mb-3 input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 0;
+}
+
+.mb-3 input[type="radio"] + label::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  margin-right: 8px;
+  background-color: #fff;
+}
+
+.mb-3 input[type="radio"]:checked + label::before {
+  background-color: #00f;
+  border-color: #00f;
+}
