@@ -75,3 +75,11 @@ export const register = async (
     bio,
   });
 };
+
+export const updateUserProfile = async (
+  updatedUser: Partial<User>
+): Promise<AxiosResponse<User>> => {
+  return await apiClient.put("/auth/update-profile", updatedUser, {
+    headers: headers(),
+  });
+};

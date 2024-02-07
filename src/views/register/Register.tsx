@@ -12,7 +12,7 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [type, setType] = useState("");
+  const [selectedType, setSelectedType] = useState("student");
   const [bio, setBio] = useState("");
 
   const registerMutation = useMutation(
@@ -31,13 +31,44 @@ function Register() {
     }) => registerRequest(name, email, password, type, bio)
   );
 
+  /*form validation*/
+  // TODO: make sure its enough
+  const validateForm = () => {
+    // Perform basic validations
+    if (!name || !email || !password || !bio) {
+      toast.error("Please fill in all fields");
+      return false;
+    }
+
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+      toast.error("Name can only contain letters and spaces");
+      return false;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Invalid email address");
+      return false;
+    }
+
+    if (bio.length < 5) {
+      toast.error("Bio must be at least 5 characters long");
+      return false;
+    }
+
+    return true;
+  };
+
   const register = async () => {
     try {
+      if (!validateForm()) {
+        return;
+      }
+
       const { data: registerRes } = await registerMutation.mutateAsync({
         name,
         email,
         password,
-        type,
+        type: selectedType,
         bio,
       });
       toast.success("Registered successfully. You can now login.");
@@ -88,22 +119,38 @@ function Register() {
         </div>
         <div className="mb-3">
           <label htmlFor="type" className="block mb-2 text-sm text-gray-700">
-            Type
+            I'm a
           </label>
-          <input
-            id="type"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          />
+          <div className="flex gap-4">
+            <label>
+              <input
+                type="radio"
+                value="student"
+                checked={selectedType === "student"}
+                onChange={() => setSelectedType("student")}
+              />
+              Student
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="company"
+                checked={selectedType === "company"}
+                onChange={() => setSelectedType("company")}
+              />
+              Company
+            </label>
+          </div>
         </div>
         <div className="mb-3">
           <label htmlFor="bio" className="block mb-2 text-sm text-gray-700">
             Bio
           </label>
-          <input
+          <textarea
             id="bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
+            rows={4}
           />
         </div>
         <button onClick={register} className="mt-4 w-full">

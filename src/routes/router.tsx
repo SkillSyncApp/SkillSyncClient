@@ -12,7 +12,7 @@ const authLoader = async () => {
   if (tokens.accessToken && tokens.refreshToken) {
     return null;
   }
-  // return redirect("/login");
+  return redirect("/login");
 };
 
 export const router = createBrowserRouter([
