@@ -13,7 +13,7 @@ import {
     resetTokens
 } from "../../services/authService";
 import { userState } from "../../store/atoms/userAtom";
-import EditProfileDialog from "../../components/edit-profile-dialog";
+import EditProfileDialog from "../../components/edit-profile-dialog/EditProfileDialog";
 
 function Profile() {
     const navigate = useNavigate();
@@ -43,6 +43,10 @@ function Profile() {
             toast.error("Failed to sign out");
         }
     };
+
+    if (!user) {
+        return null;
+    }
 
     return (
         <div className="flex-1 bg-lightgray flex flex-col items-center p-[70px] relative">
