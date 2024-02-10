@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import {
     useMutation
 } from 'react-query';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from 'recoil';
 import FacebookIcon from '../../icons/FacebookIcon';
 import GoogleIcon from '../../icons/GoogleIcon';
@@ -40,8 +40,13 @@ function Login() {
     };
 
     return <div className="h-[100vh] bg-primary flex items-center justify-center flex flex-col font-display">
+
         <div className="w-[500px] bg-white rounded-[20px] drop-shadow-lg p-[40px]">
-            <h1 className="text-2xl mb-3 font-bold">Login</h1>
+            <div className='text-center mb-5 text-primary'>
+                <p className='opacity-60'>welcome to</p>
+                <h1 className='font-bold text-4xl'>SKILLSYNC</h1>
+            </div>
+            {/* <h1 className="text-2xl mb-3 font-bold">Login</h1> */}
             <div className='mb-3'>
                 <label htmlFor="email" className="block mb-2 text-sm text-gray-700">Email</label>
                 <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -65,6 +70,9 @@ function Login() {
                     <FacebookIcon width={25} />
                     Facebook
                 </div>
+            </div>
+            <div className='text-center pt-8 text-sm'>
+                <p> Don't have an account yet? <Link to='/register' replace className='underline'>register here</Link></p>
             </div>
         </div>
         <Toaster />

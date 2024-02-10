@@ -119,7 +119,7 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
                 <button
                     onClick={handleUpdate}
                 >
-                    Update Profile
+                    Update
                 </button>
             </div>
         </Dialog>

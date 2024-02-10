@@ -10,3 +10,5 @@ export type Post = {
     image?: string,
     commentsCount: number
 }
+
+export type CreatePostInput = Pick<Post, 'title' | 'content' | 'image'>;
