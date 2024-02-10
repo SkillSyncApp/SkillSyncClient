@@ -1,6 +1,6 @@
 export type UserType = 'company' | 'student';
 
-export type User ={
+export type User = {
     _id: string;
     email: string;
     name: string;
@@ -8,3 +8,5 @@ export type User ={
     image?: string;
     bio: string;
 };
+
+export type UpdateUserInput = Pick<User, 'name' | 'bio' | 'image'>;

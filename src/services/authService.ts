@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { User } from "../types/User";
+import { UpdateUserInput, User } from "../types/User";
 import apiClient from "./httpCommon";
 
 const ACCESS_TOKEN_KEY = "accessToken";
@@ -77,8 +77,8 @@ export const register = async (
 };
 
 export const updateUserProfile = async (
-  updatedUser: Partial<User>
-): Promise<AxiosResponse<User>> => {
+  updatedUser: UpdateUserInput
+): Promise<AxiosResponse<{ user: UpdateUserInput }>> => {
   return await apiClient.put("/auth/update-profile", updatedUser, {
     headers: headers(),
   });
