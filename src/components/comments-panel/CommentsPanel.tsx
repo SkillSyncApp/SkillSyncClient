@@ -66,7 +66,10 @@ function CommentsPanel({ show, post, onClose }: CommentsPanelProps) {
         {post &&
             <div className='flex flex-col overflow-hidden flex-1'>
                 <div className='overflow-y-scroll flex-1' ref={commentsWrapperRef}>
-                    <PostItem post={post} style={{ marginLeft: 10, marginRight: 10, flexShrink: 0 }} />
+                    <PostItem
+                        post={post}
+                        style={{ marginLeft: 10, marginRight: 10, flexShrink: 0 }}
+                    />
                     <h2 className='font-bold mt-5'>Comments ({comments.length})</h2>
                     <div className='comments flex flex-col gap-3 mt-5 flex-1 overflow-y-scroll'>
                         {comments.map(comment => (

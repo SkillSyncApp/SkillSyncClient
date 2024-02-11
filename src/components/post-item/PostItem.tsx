@@ -1,10 +1,12 @@
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { CSSProperties } from 'react';
 import { Post } from "../../types/Post";
 import ProfileImage from '../profile-image/ProfileImage';
 
 type PostItemProps = {
     post: Post;
+    onDelete?: () => void;
     comments?: {
         show: boolean,
         onClick?: () => void;
@@ -13,7 +15,7 @@ type PostItemProps = {
     style?: CSSProperties;
 }
 
-function PostItem({ post, comments, maxHeight, style }: PostItemProps) {
+function PostItem({ post, onDelete, comments, maxHeight, style }: PostItemProps) {
     return <article className="post-item rounded-[20px] bg-white flex flex-col p-5 h-fit gap-2 drop-shadow-xl overflow-hidden" style={{ maxHeight, ...style }}>
         {
             post.image &&
@@ -26,8 +28,15 @@ function PostItem({ post, comments, maxHeight, style }: PostItemProps) {
         }
         <div className="flex gap-2">
             <ProfileImage src={post.ownerId.image} className='h-[50px] w-[50px] rounded-xl' />
-            <div>
-                <h3 className="font-bold text-lg">{post.ownerId.name}</h3>
+            <div className='flex-1'>
+                <div className='flex justify-between'>
+                    <h3 className="font-bold text-lg">{post.ownerId.name}</h3>
+                    {onDelete &&
+                        <div className='group cursor-pointer' onClick={onDelete} >
+                            <TrashIcon title='delete post' className='opacity-60 group-hover:-translate-y-[2px] transition-all' width={20} height={20} />
+                        </div>
+                    }
+                </div>
                 <div className='opacity-50 text-sm'>{post.ownerId.type}</div>
             </div>
         </div>
