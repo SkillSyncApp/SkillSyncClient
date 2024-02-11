@@ -1,6 +1,6 @@
 import { User } from "./User";
 
-type PostOwner = Pick<User, 'name' | 'type' | 'image' >;
+type PostOwner = Pick<User, '_id' | 'name' | 'type' | 'image' >;
 
 export type Post = {
     _id: string,
