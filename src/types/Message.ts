@@ -2,12 +2,8 @@ import { User } from "./User";
 
 export type Message = {
     _id: String,
-    sender: {
-        info: MessageSender,
-        name: string;
-        image?: string; // Image is optional
-    }
+    sender: MessageSender,
     content: string;
 }
 
-type MessageSender = Pick<User, '_id' >;
+type MessageSender = Pick<User, '_id' | 'name' | 'image' >;

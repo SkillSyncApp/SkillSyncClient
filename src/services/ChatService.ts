@@ -4,8 +4,15 @@ import { Message } from "../types/Message";
 import apiClient from "./httpCommon";
 
 // export const addMessage = async (
-//     receiverId: Message['sender..'],
+//     receiverId: Message['sender'],
 //     message: string
 //     ): Promise<AxiosResponse<Message[]>> => {
-//     return await apiClient.post(`/chat/send_message/${receiverId}`, { message }, { headers: headers() });
+//     return await apiClient.post(`/chat/sendMessage/${receiverId}`, { message }, { headers: headers() });
+// };
+
+// export const listMessages = async (
+//     receiverId: Message['sender'],
+//     message: string
+//     ): Promise<AxiosResponse<Message[]>> => {
+//     return await apiClient.post(`/chat/listMessages/${receiverId}`, { message }, { headers: headers() });
 // };

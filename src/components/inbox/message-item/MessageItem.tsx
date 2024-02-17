@@ -12,7 +12,7 @@ type MessageProp = {
 function MessageItem({ message, style }: MessageProp) {
     const user = useRecoilValue(userState);
 
-    const messageClass = user._id == message.sender.info._id ? 'me' : 'other';
+    const messageClass = user._id == message.sender._id ? 'me' : 'other';
 
     return <div className={`message-wrapper flex drop-shadow-md items-center relative ${messageClass}`} style={style}>
         <div className="message flex flex-col rounded-lg py-3 px-4">
