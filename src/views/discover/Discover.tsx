@@ -1,4 +1,4 @@
-import { PlusIcon, PencilIcon } from "@heroicons/react/24/solid";
+import { PlusIcon } from "@heroicons/react/24/solid";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { useState } from "react";

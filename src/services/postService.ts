@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { CreatePostInput, Post } from "../types/Post";
+import { CreatePostInput, Post, UpdatePostInput } from "../types/Post";
 import { headers } from "./authService";
 import apiClient from "./httpCommon";
 
