@@ -1,10 +1,13 @@
-type SenderType = "me" | "other";
+import { User } from "./User";
 
 export type Message = {
+    _id: String,
     sender: {
-        type: SenderType,
+        info: MessageSender,
         name: string;
-        image: string;
+        image?: string; // Image is optional
     }
     content: string;
 }
+
+type MessageSender = Pick<User, '_id' >;

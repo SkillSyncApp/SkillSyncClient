@@ -6,5 +6,5 @@ export type Comment = {
     _id: string,
     userId: CommentOwner,
     content: string,
-    createdAt: string,
+    createdAt: string
 }
