@@ -12,6 +12,6 @@ export const getConversationMessages = async (receiverId: String): Promise<Axios
     return await apiClient.get(`/chat/messages/${receiverId}`, { headers: headers() });
 };
 
-export const addConversations = async (receiverId: String): Promise<AxiosResponse<ConversationOverview[]>> => {
+export const addConversation = async (receiverId: String): Promise<AxiosResponse<ConversationOverview[]>> => {
     return await apiClient.post(`/chat/addConversation/${receiverId}`, { headers: headers() });
 };

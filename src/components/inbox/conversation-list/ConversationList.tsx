@@ -8,7 +8,6 @@ type ConversationListProps = {
 }
 
 function ConversationList({ conversations, onConversationClick }: ConversationListProps) {    
-
     return <div className="bg-white drop-shadow-lg z-10">
         {conversations.map((conversation, index) =>
             <div key={`${conversation.sender.name} - ${index}`} onClick={() => onConversationClick(conversation.sender._id.toString())} className="conversation-overview cursor-pointer hover:bg-lightgray pl-[20px] pr-[70px] py-[15px] flex items-center gap-2">

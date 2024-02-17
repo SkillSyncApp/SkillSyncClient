@@ -8,7 +8,7 @@ import Conversation from "../../components/inbox/conversation/Conversation";
 
 function Inbox() {
     const { data: conversationsData } = useQuery(GET_CONVERSATIONS_OVERVIEW, getConversationsOverView, { staleTime: Infinity });
-    const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
+    const [selectedConversation, setSelectedConversation] = useState<string>("");
 
     const handleConversationClick = (userId: string) => {
         setSelectedConversation(userId);
@@ -24,7 +24,7 @@ function Inbox() {
 
     return <div className="flex flex-1">
         <ConversationList conversations={conversations} onConversationClick={handleConversationClick}/>
-        <Conversation messages={messages}/>
+        <Conversation messages={messages} recieverId={selectedConversation}/>
     </div>
 }
 
