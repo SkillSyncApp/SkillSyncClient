@@ -1,7 +1,7 @@
-import { Message } from "./Message";
+import { User } from "./User";
 
 export type Conversation = {
-    _id: string;
-    messages: Array<{ message: Message }>;
-  };
-  
+  _id: string;
+  // messages: Message[];
+  users: User[];
+};

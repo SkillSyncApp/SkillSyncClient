@@ -66,7 +66,7 @@ function CommentsPanel({ show, post, onClose }: CommentsPanelProps) {
         {post &&
             <div className='flex flex-col overflow-hidden flex-1'>
                 <div className='overflow-y-scroll flex-1' ref={commentsWrapperRef}>
-                    <PostItem
+gi                    <PostItem
                         post={post}
                         style={{ marginLeft: 10, marginRight: 10, flexShrink: 0 }}
                     />

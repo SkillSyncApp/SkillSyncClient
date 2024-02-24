@@ -24,7 +24,11 @@ export const router = createBrowserRouter([
     errorElement: <div>error</div>,
     children: [
       { path: "/", element: <Discover /> },
-      { path: "/inbox", element: <Inbox /> },
+      {
+        path: "/inbox", element: <Inbox />, children: [
+          { path: ":conversationId", element: <Inbox /> }
+        ]
+      },
       { path: "/profile", element: <Profile /> },
     ],
   },

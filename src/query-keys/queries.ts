@@ -2,10 +2,8 @@
 export const GET_ALL_POSTS = 'posts';
 
 // comments
-export const GET_POST_COMMENTS = 'getPostComments';
-
-// conversations overview
-export const GET_CONVERSATIONS_OVERVIEW = 'conversationsOverView'
+export const GET_POST_COMMENTS = 'comments';
 
 // conversation
-export const GET_CONVERSATION_MESSAGES = 'conversation'
+export const GET_CONVERSATIONS = 'conversations'
+export const GET_MESSAGES = 'messages'
