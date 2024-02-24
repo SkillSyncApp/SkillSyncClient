@@ -1,21 +1,38 @@
-import { ConversationOverview } from "../../../types/ConversationOverview";
-import './ConversationList.css';
+import { useRecoilValue } from 'recoil';
 import DefaultProfileImage from '../../../assets/images/profile-image.png';
+import { Conversation } from "../../../types/Conversation";
+import './ConversationList.css';
+import { userState } from '../../../store/atoms/userAtom';
+import classNames from 'classnames';
 
 type ConversationListProps = {
-    conversations: ConversationOverview[];
-    onConversationClick: (otherUserId: string) => void;
+    conversations: Conversation[];
+    selectedConversationId: Conversation['_id'] | undefined;
+    onConversationSelect: (conversationId: Conversation['_id']) => void;
+    // onConversationClick: (otherUserId: string) => void;
 }
 
-function ConversationList({ conversations, onConversationClick }: ConversationListProps) {    
+function ConversationList({ conversations, selectedConversationId, onConversationSelect }: ConversationListProps) {
+    const user = useRecoilValue(userState);
+
+    const conversationRenderer = (conversation: Conversation) => {
+        const conversationLead = conversation.users.find(conversationUser => conversationUser._id !== user._id);
+        const conversationClass = classNames({
+            'bg-lightgray': conversation._id === selectedConversationId
+        })
+
+        return <div
+            key={conversation._id}
+            className={`conversation-overview cursor-pointer hover:bg-lightgray pl-[20px] pr-[70px] py-[15px] flex items-center gap-2 ${conversationClass}`}
+            onClick={() => onConversationSelect(conversation._id)}
+        >
+            <img className="circle w-[40px] h-[40px]" src={conversationLead?.image || DefaultProfileImage} />
+            <h2>{conversationLead?.name || 'unknown'}</h2>
+        </div>
+    }
 
     return <div className="bg-white drop-shadow-lg z-10">
-        {conversations.map((conversation, index) =>
-            <div key={`${conversation.sender.name} - ${index}`} onClick={() => onConversationClick(conversation.sender._id.toString())} className="conversation-overview cursor-pointer hover:bg-lightgray pl-[20px] pr-[70px] py-[15px] flex items-center gap-2">
-                <img className="circle w-[40px] h-[40px]" src={conversation.sender.image || DefaultProfileImage} />
-                <h2>{conversation.sender.name}</h2>
-            </div>)
-        }
+        {conversations.map(conversationRenderer)}
     </div>
 }
 
