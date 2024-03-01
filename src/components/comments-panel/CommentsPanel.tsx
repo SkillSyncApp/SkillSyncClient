@@ -78,7 +78,10 @@ function CommentsPanel({ show, post, onClose }: CommentsPanelProps) {
                     </div>
                 </div>
                 <div className='add-comment flex-0 add-comment pt-3 flex flex-col gap-4'>
-                    <textarea value={newCommentContent} onChange={(e) => setNewCommentContent(e.target.value)} placeholder='Add your comment..' className='h-[100px] resize-none' />
+                    <textarea value={newCommentContent} 
+                        onChange={(e) => setNewCommentContent(e.target.value)}
+                        placeholder='Add your comment..' 
+                        className='h-[100px] resize-none' />
                     <button disabled={newCommentContent === "" || addCommentMutation.isLoading} className={classNames('w-full', newCommentContent === "" && 'opacity-60')} onClick={addNewComment}>Add Comment</button>
                 </div>
             </div>

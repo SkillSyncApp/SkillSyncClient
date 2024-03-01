@@ -12,8 +12,10 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
+    "@react-oauth/google": "^0.12.1",
     "axios": "^1.6.5",
     "classnames": "^2.5.1",
+    "google-auth-library": "^9.6.3",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.3",
     "moment": "^2.30.1",

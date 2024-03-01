@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
-import { UpdateUserInput, User } from "../types/User";
+import { UpdateUserGoogleInput, UpdateUserInput, User } from "../types/User";
 import apiClient from "./httpCommon";
+import { CredentialResponse } from "@react-oauth/google"
 
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
@@ -76,10 +77,36 @@ export const register = async (
   });
 };
 
+type GoogleSignInResponse = {
+  user: User;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export const googleSignIn = async (
+  credentialResponse: CredentialResponse,
+  type?: string,
+  bio?: string
+  ): Promise<AxiosResponse<GoogleSignInResponse>> => {
+    return await apiClient.post("/auth/google", {
+      credentialResponse,
+      type,
+      bio
+    })
+}
+
 export const updateUserProfile = async (
   updatedUser: UpdateUserInput
 ): Promise<AxiosResponse<{ user: UpdateUserInput }>> => {
   return await apiClient.put("/auth/update-profile", updatedUser, {
+    headers: headers(),
+  });
+};
+
+export const updateUserBioType = async (
+  updatedUser: UpdateUserGoogleInput
+): Promise<AxiosResponse<{ user: UpdateUserGoogleInput }>> => {
+  return await apiClient.put("/auth/update-additional-info", updatedUser, {
     headers: headers(),
   });
 };

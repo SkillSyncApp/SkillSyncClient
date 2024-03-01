@@ -1,4 +1,4 @@
-export type UserType = 'company' | 'student';
+export type UserType = 'company' | 'student' | 'unknown';
 
 export type User = {
     _id: string;
@@ -10,3 +10,5 @@ export type User = {
 };
 
 export type UpdateUserInput = Pick<User, 'name' | 'bio' | 'image'>;
+
+export type UpdateUserGoogleInput = Pick<User, 'bio' | 'type'>;
