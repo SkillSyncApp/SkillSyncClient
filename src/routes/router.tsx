@@ -6,6 +6,7 @@ import Inbox from "../views/inbox/Inbox";
 import Login from "../views/login/Login";
 import Profile from "../views/profile/Profile";
 import Register from "../views/register/Register";
+import LogInGoogle from "../views/additionalInfoGoogle/AdditionalInfo";
 
 const authLoader = async () => {
   const tokens = getTokens();
@@ -40,4 +41,8 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
+  {
+    path: "/logInGoogle",
+    element: <LogInGoogle />
+  }
 ]);

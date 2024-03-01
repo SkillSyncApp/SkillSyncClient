@@ -151,6 +151,7 @@ function Register() {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             rows={4}
+            className="resize-none"
           />
         </div>
         <button onClick={register} className="mt-4 w-full">

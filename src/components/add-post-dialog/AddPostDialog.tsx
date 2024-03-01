@@ -49,7 +49,12 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
             </div>
             <div>
                 <label htmlFor="content" className="block mb-2 text-sm text-gray-700">Content</label>
-                <textarea rows={4} id="content" value={content} onChange={(e) => setContent(e.target.value)} className="resize-none" />
+                <textarea 
+                    rows={4} 
+                    id="content" 
+                    value={content} 
+                    onChange={(e) => setContent(e.target.value)}
+                    className="resize-none" />
             </div>
             <div >
                 <label htmlFor="image" className="block mb-2 text-sm text-gray-700">Image (optional)</label>

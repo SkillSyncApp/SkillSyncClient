@@ -5,11 +5,10 @@ import {
 } from 'react-query';
 import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from 'recoil';
-import FacebookIcon from '../../icons/FacebookIcon';
-import GoogleIcon from '../../icons/GoogleIcon';
-import { login as loginRequest, saveTokens } from '../../services/authService';
+import { login as loginRequest, saveTokens, googleSignIn } from '../../services/authService';
 import { userState } from '../../store/atoms/userAtom';
 import './Login.css';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 
 function Login() {
     const navigate = useNavigate();
@@ -21,7 +20,7 @@ function Login() {
 
     const loginMutation = useMutation(({ email, password }: { email: string, password: string }) =>
         loginRequest(email, password));
-
+        
     const login = async () => {
         try {
             const { data: loginRes } = await loginMutation.mutateAsync({
@@ -38,6 +37,27 @@ function Login() {
             console.log(err)
         }
     };
+
+
+  const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
+    try {
+        const response = await googleSignIn(credentialResponse)
+            const { data: loginGoogleRes } = response;
+
+            saveTokens({ accessToken: loginGoogleRes.accessToken, refreshToken: loginGoogleRes.refreshToken });
+            setUser(loginGoogleRes.user);
+            if (response.data.user?.type === "unknown") 
+                navigate('/logInGoogle', { replace: true });
+            else navigate('/', { replace: true });
+
+    } catch (err) { 
+        console.log(err)
+    }
+}
+
+const onGoogleLoginFailure = () => {
+    console.log("failed google log in")
+}
 
     return <div className="h-[100vh] bg-primary flex items-center justify-center flex flex-col font-display">
 
@@ -62,14 +82,12 @@ function Login() {
                 <div className='divider' />
             </div>
             <div className='flex gap-2 justify-center'>
-                <div className="login-provider shadow-lg">
-                    <GoogleIcon width={20} />
+            <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure} />
+
+                {/* <div className="login-provider shadow-lg" onClick={onGoogleLogIn}>
+                    <GoogleIcon width={20}/>
                     Google
-                </div>
-                <div className="login-provider shadow-lg">
-                    <FacebookIcon width={25} />
-                    Facebook
-                </div>
+                </div> */}
             </div>
             <div className='text-center pt-8 text-sm'>
                 <p> Don't have an account yet? <Link to='/register' replace className='underline'>register here</Link></p>
