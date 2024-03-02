@@ -19,10 +19,10 @@ function ButtonGenerateContentAI({ title, setContent }: ButtonGenerateContentAIP
     
   return (
     <button
-        className="relative rounded-md text-gray-500 hover:text-white focus:outline-none flex items-center gap-1 h-[40px]"
+        className="relative rounded-md text-gray-500 hover:text-white focus:outline-none flex items-center gap-1 py-1"
         onClick={generatePostContent}>
         <MagicIcon width={18} />
-        <span className="text-xs">Generate Content with AI</span>
+        <span className="text-sm">Generate Content with AI</span>
     </button>
   )
 }

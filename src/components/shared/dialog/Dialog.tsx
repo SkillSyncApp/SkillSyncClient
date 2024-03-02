@@ -7,9 +7,10 @@ type DialogProps = {
 	onClose: () => void;
 	title: string;
 	children?: React.ReactNode;
+	showHeader?: boolean;
 }
 
-function Dialog({ show, onClose, title, children }: DialogProps) {
+function Dialog({ show, onClose, title, children, showHeader = true }: DialogProps) {
 
 	return <Transition appear show={show} as={Fragment}>
 		<HeadledssDialog as="div" className="relative z-10" onClose={onClose}>
@@ -37,13 +38,13 @@ function Dialog({ show, onClose, title, children }: DialogProps) {
 						leaveTo="opacity-0 scale-95"
 					>
 						<HeadledssDialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-							<HeadledssDialog.Title
+							{showHeader && <HeadledssDialog.Title
 								as="h3"
 								className="text-lg font-medium leading-6 text-gray-900 flex items-center"
 							>
 								{title}
 								<XMarkIcon onClick={onClose} className="ml-auto h-[20px] w-[20px] cursor-pointer" />
-							</HeadledssDialog.Title>
+							</HeadledssDialog.Title>}
 							{children}
 						</HeadledssDialog.Panel>
 					</Transition.Child>

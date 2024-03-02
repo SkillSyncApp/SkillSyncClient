@@ -9,10 +9,10 @@ type ConversationListProps = {
     conversations: Conversation[];
     selectedConversationId: Conversation['_id'] | undefined;
     onConversationSelect: (conversationId: Conversation['_id']) => void;
-    // onConversationClick: (otherUserId: string) => void;
+    loading: boolean;
 }
 
-function ConversationList({ conversations, selectedConversationId, onConversationSelect }: ConversationListProps) {
+function ConversationList({ conversations, selectedConversationId, onConversationSelect, loading }: ConversationListProps) {
     const user = useRecoilValue(userState);
 
     const conversationRenderer = (conversation: Conversation) => {
@@ -31,7 +31,26 @@ function ConversationList({ conversations, selectedConversationId, onConversatio
         </div>
     }
 
-    return <div className="bg-white drop-shadow-lg z-10">
+    const conversationsSkeletonRenderer = () => {
+        const skeletonItems = Array.from({ length: 8 }, (_, i) => i + 120);
+
+        const getRandomWidth = () => {
+            return Math.min(140, Math.max(70, Math.floor(Math.random() * 140)))
+        }
+
+        return <div className='animate-pulse'>
+            {skeletonItems.map((index) => <div
+                key={index}
+                className="conversation-overview cursor-pointer hover:bg-lightgray pl-[20px] pr-[70px] py-[15px] flex items-center gap-2"
+            >
+                <div className="circle w-[40px] h-[40px] bg-midgray flex-none"/>
+                <div className="h-[14px] bg-midgray rounded-lg" style={{ width: getRandomWidth() }}/>
+            </div>)}
+        </div>
+    }
+
+    return <div className={`bg-white drop-shadow-lg z-10 ${loading || conversations.length !== 0 ? 'w-[250px]' : ''}`}>
+        {loading && conversationsSkeletonRenderer()}
         {conversations.map(conversationRenderer)}
     </div>
 }

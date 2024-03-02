@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import ConversationList from "../../components/inbox/conversation-list/ConversationList";
 import ConversationChat from "../../components/inbox/conversationChat/ConversationChat";
 import { GET_CONVERSATIONS, GET_MESSAGES } from "../../query-keys/queries";
-import { getConversations, getMessages, sendMessage } from "../../services/ChatService";
+import { getConversations, getMessages, sendMessage } from "../../services/chatService";
 import { userState } from "../../store/atoms/userAtom";
 import { Conversation } from "../../types/Conversation";
 import { Message } from "../../types/Message";
@@ -17,10 +17,10 @@ function Inbox() {
     const user = useRecoilValue(userState);
 
     const queryClient = useQueryClient();
-    const { data: conversationsData } = useQuery(GET_CONVERSATIONS, getConversations);
+    const { data: conversationsData, isLoading: isConversationsLoading } = useQuery(GET_CONVERSATIONS, getConversations);
     const conversations: Conversation[] = conversationsData?.data || [];
 
-    const { data: messagesData } = useQuery(
+    const { data: messagesData, isLoading: isMessagesLoading } = useQuery(
         [GET_MESSAGES, selectedConversationId],
         () => getMessages(selectedConversationId),
         { enabled: selectedConversationId !== undefined }
@@ -48,15 +48,20 @@ function Inbox() {
     }
 
     return <div className="flex flex-1">
-        <ConversationList conversations={conversations} selectedConversationId={selectedConversationId} onConversationSelect={onConversationSelect} />
+        <ConversationList
+            conversations={conversations}
+            selectedConversationId={selectedConversationId}
+            onConversationSelect={onConversationSelect}
+            loading={isConversationsLoading}
+        />
         {selectedConversationId ?
-            <ConversationChat messages={selectedConversationMessages} onNewMessage={sendNewMessage} /> :
+            <ConversationChat messages={selectedConversationMessages} onNewMessage={sendNewMessage} loading={isMessagesLoading} /> :
             <div className="flex-1 flex flex-col items-center justify-center">
                 <img src={MessagesIcon} className="h-[250px] drop-shadow-lg" />
                 {
                     conversations.length === 0 ?
                         <>
-                        <div className="font-bold opacity-60 text-md">no conversations yet</div>
+                            <div className="font-bold opacity-60 text-md">no conversations yet</div>
                             <div className="opacity-60 text-sm">it's time to start contact with other users</div>
                         </> :
                         <>

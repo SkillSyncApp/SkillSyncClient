@@ -3,6 +3,7 @@ import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { CSSProperties } from "react";
 import { Post } from "../../types/Post";
 import ProfileImage from "../profile-image/ProfileImage";
+import UserOverview from "../user-overview/UserOverview";
 
 type PostItemProps = {
   post: Post;
@@ -44,7 +45,8 @@ function PostItem({
             className="h-[50px] w-[50px] rounded-xl"
           />
           <div>
-            <h3 className="font-bold text-lg">{post.ownerId.name}</h3>
+            <UserOverview id={post.ownerId._id} name={post.ownerId.name}/>
+            {/* <h3 className="font-bold text-lg">{post.ownerId.name}</h3> */}
             <div className="opacity-50 text-sm">{post.ownerId.type}</div>
           </div>
         </div>
