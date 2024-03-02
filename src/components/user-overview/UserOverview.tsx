@@ -55,7 +55,7 @@ function UserOverview({ id, name }: UserOverviewProps) {
 
     return (
         <>
-            <h3 className="font-bold text-lg hover:underline" onClick={openProfile}>{name}</h3>
+            <h3 className="font-bold text-lg hover:underline cursor-pointer" onClick={openProfile}>{name}</h3>
             {showProfileDialog && userData &&
                 <Dialog show={showProfileDialog} onClose={() => setShowProfileDialog(false)} showHeader={false} title={`${getFirstName(userData)}'s Profile`}>
                     <div className="flex flex-col pt-5 items-center">

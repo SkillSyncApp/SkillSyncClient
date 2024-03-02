@@ -3,6 +3,7 @@ import Dialog from "../shared/dialog/Dialog";
 import { useMutation, useQueryClient } from "react-query";
 import { CreatePostInput } from "../../types/Post";
 import { addPost } from "../../services/postService";
+import { uploadImage } from "../../services/fileUploadService";
 import toast from "react-hot-toast";
 import { GET_ALL_POSTS } from "../../query-keys/queries";
 import ButtonGenerateContentAI from '../shared/button-generate-ai/ButtonGenerateContentAI'
@@ -17,11 +18,14 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [image, setImage] = useState('')
 
-    const uploadFile = ({ target }: { target: HTMLInputElement }) => {
+    const uploadFile = async ({ target }: { target: HTMLInputElement }) => {
         if (target.files?.length) {
             const [file] = target.files;
             console.log(URL.createObjectURL(file));
+            const image = await uploadImage(file);
+            setImage(image.data.url)
         }
     };
 
@@ -34,7 +38,7 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
 
     const add = async () => {
         try {
-            await addPostMutation.mutateAsync({ title, content });
+            await addPostMutation.mutateAsync({ title, content, image });
             toast.success('Great! your new post is up');
             onClose();
         } catch (err) {
@@ -66,7 +70,7 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
         </div>
             <div>
                 <label htmlFor="image" className="block mb-2 text-sm text-gray-700">Image (optional)</label>
-                <input id="image" type="file" onChange={uploadFile} />
+                <input id="image" accept=".png, .jpg, .jpeg, .svg" name="file" type="file" onChange={uploadFile} />
             </div>
             <button onClick={add} className="mt-4">Done</button>
         </div>
