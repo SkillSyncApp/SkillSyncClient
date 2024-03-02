@@ -4,7 +4,7 @@ export const generatePost = async (postTitle: string): Promise<string> => {
     const maxCharacterLimit = 200
     try {
         const openai = new OpenAI({
-        apiKey: "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", //TODO
+        apiKey: import.meta.env.VITE_REACT_APP_OPENAPI_API_KEY,
         dangerouslyAllowBrowser: true  // remove after moving to https
         });
 
