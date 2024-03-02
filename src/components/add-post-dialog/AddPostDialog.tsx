@@ -51,7 +51,7 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
         <div>
             <div className="flex flex-col items-start gap-4 mb-2">
                 <div className="flex flex-row items-center gap-4">
-                    <label htmlFor="content" className="block mb-2 text-sm text-gray-700">
+                    <label htmlFor="content" className="block text-sm text-gray-700">
                         Content
                     </label>
                     <ButtonGenerateContentAI title = {title} setContent={setContent}/>

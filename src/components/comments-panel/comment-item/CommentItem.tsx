@@ -1,6 +1,7 @@
 import { Comment } from "../../../types/Comment"
 import { formattedDate } from "../../../utils/dates";
 import ProfileImage from "../../profile-image/ProfileImage";
+import UserOverview from "../../user-overview/UserOverview";
 
 type CommentItemProps = {
     comment: Comment;
@@ -11,7 +12,7 @@ function CommentItem({ comment }: CommentItemProps) {
         <div className='flex gap-3'>
             <ProfileImage src={comment.userId.image} className='shadow-md h-[40px] w-[40px]' />
             <div className='content flex flex-col'>
-                <span className='font-bold'>{comment.userId.name}</span>
+                <UserOverview id={comment.userId._id} name={comment.userId.name} />
                 <span className='time opacity-60 text-[14px]'>{formattedDate(comment.createdAt)}</span>
             </div>
         </div>

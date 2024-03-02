@@ -9,6 +9,7 @@ export default {
       colors: {
         primary: 'var(--color-primary)',
         lightgray: 'var(--color-lightgray)',
+        midgray: 'var(--color-midgray)',
         gray: 'var(--color-text-gray)'
       },
     },
