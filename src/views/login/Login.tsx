@@ -84,7 +84,7 @@ const onGoogleLoginFailure = () => {
             <div className='flex gap-2 justify-center'>
             <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure} />
 
-                {/* <div className="login-provider shadow-lg" onClick={onGoogleLogIn}>
+             {/* <div className="login-provider shadow-lg" onClick={onGoogleLogIn}> 
                     <GoogleIcon width={20}/>
                     Google
                 </div> */}

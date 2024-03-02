@@ -5,6 +5,7 @@ import { CreatePostInput } from "../../types/Post";
 import { addPost } from "../../services/postService";
 import toast from "react-hot-toast";
 import { GET_ALL_POSTS } from "../../query-keys/queries";
+import ButtonGenerateContentAI from '../shared/button-generate-ai/ButtonGenerateContentAI'
 
 type AddPostDialogProps = {
     show: boolean;
@@ -47,16 +48,23 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
                 <label htmlFor="title" className="block mb-2 text-sm text-gray-700">Title</label>
                 <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
-            <div>
-                <label htmlFor="content" className="block mb-2 text-sm text-gray-700">Content</label>
-                <textarea 
-                    rows={4} 
-                    id="content" 
-                    value={content} 
-                    onChange={(e) => setContent(e.target.value)}
-                    className="resize-none" />
+        <div>
+            <div className="flex flex-col items-start gap-4 mb-2">
+                <div className="flex flex-row items-center gap-4">
+                    <label htmlFor="content" className="block mb-2 text-sm text-gray-700">
+                        Content
+                    </label>
+                    <ButtonGenerateContentAI title = {title} setContent={setContent}/>
+                </div>
             </div>
-            <div >
+            <textarea 
+                rows={4} 
+                id="content" 
+                value={content} 
+                onChange={(e) => setContent(e.target.value)}
+                className="resize-none" />
+        </div>
+            <div>
                 <label htmlFor="image" className="block mb-2 text-sm text-gray-700">Image (optional)</label>
                 <input id="image" type="file" onChange={uploadFile} />
             </div>
