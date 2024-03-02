@@ -1,10 +1,12 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { updatePost } from "../../services/postService";
 import { Post } from "../../types/Post";
 import Dialog from "../shared/dialog/Dialog";
 import ButtonGenerateContentAI from "../shared/button-generate-ai/ButtonGenerateContentAI"
+import { uploadImage } from "../../services/fileUploadService";
+import { GET_ALL_POSTS } from "../../query-keys/queries";
 
 type EditPostDialogProps = {
   show: boolean;
@@ -13,14 +15,18 @@ type EditPostDialogProps = {
 };
 
 function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
+  const queryClient = useQueryClient();
 
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
   const [image, setImage] = useState(post.image || ""); // If no image, default to empty string
 
   const updatePostMutation = useMutation((updatedPost: Partial<Post>) =>
-    updatePost(post._id, updatedPost)
-  );
+    updatePost(post._id, updatedPost), {
+      onSettled: () => {
+        queryClient.invalidateQueries(GET_ALL_POSTS);
+      }
+  });
 
   const updatePostData = async () => {
     try {
@@ -32,10 +38,11 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImage = e.target.files?.[0];
     if (selectedImage) {
-      // Handle image upload if needed
+      const image = await uploadImage(selectedImage);
+      setImage(image.data.url)
     }
   };
 
@@ -73,7 +80,7 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
           <label htmlFor="image" className="block mb-2 text-sm text-gray-700">
             Image (optional)
           </label>
-          <input id="image" type="file" onChange={handleImageChange} />
+          <input id="image" accept=".png, .jpg, .jpeg, .svg" type="file" onChange={handleUpdateImageChange} /> {/* TODO show image path url for the first time */}
         </div>
         <button onClick={updatePostData}>Update</button>
       </div>

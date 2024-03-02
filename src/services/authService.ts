@@ -25,7 +25,7 @@ export const getTokens = () => {
 
 export const saveTokens = ({
   accessToken,
-  refreshToken,
+  refreshToken
 }: {
   accessToken: string;
   refreshToken: string;
@@ -73,7 +73,7 @@ export const register = async (
     email,
     password,
     type,
-    bio,
+    bio
   });
 };
 
