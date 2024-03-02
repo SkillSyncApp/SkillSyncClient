@@ -1,9 +1,10 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import { updatePost } from "../../services/postService";
 import { Post } from "../../types/Post";
 import Dialog from "../shared/dialog/Dialog";
+import ButtonGenerateContentAI from "../shared/button-generate-ai/ButtonGenerateContentAI"
 
 type EditPostDialogProps = {
   show: boolean;
@@ -12,7 +13,6 @@ type EditPostDialogProps = {
 };
 
 function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
-  const queryClient = useQueryClient();
 
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
@@ -53,9 +53,14 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
           />
         </div>
         <div>
-          <label htmlFor="content" className="block mb-2 text-sm text-gray-700">
-            Content
-          </label>
+          <div className="flex flex-col items-start gap-4 mb-2">
+            <div className="flex flex-row items-center gap-4">
+              <label htmlFor="content" className="block mb-2 text-sm text-gray-700">
+                  Content
+              </label>
+              <ButtonGenerateContentAI title = {title} setContent={setContent}/>
+            </div>
+          </div>
           <textarea
             rows={4}
             id="content"

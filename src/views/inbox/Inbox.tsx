@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import ConversationList from "../../components/inbox/conversation-list/ConversationList";
 import ConversationChat from "../../components/inbox/conversationChat/ConversationChat";
 import { GET_CONVERSATIONS, GET_MESSAGES } from "../../query-keys/queries";
-import { getConversations, getMessages, sendMessage } from "../../services/chatService";
+import { getConversations, getMessages, sendMessage } from "../../services/ChatService";
 import { userState } from "../../store/atoms/userAtom";
 import { Conversation } from "../../types/Conversation";
 import { Message } from "../../types/Message";
