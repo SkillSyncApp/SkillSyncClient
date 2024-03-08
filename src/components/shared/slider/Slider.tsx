@@ -1,16 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Fragment } from 'react';
-import React from "react";
+import { Fragment, PropsWithChildren } from 'react';
 
 type SliderProps = {
   show: boolean,
   onClose: () => void,
   title: string,
-  children: React.ReactNode,
 };
 
-function Slider({ show, onClose, title, children }: SliderProps) {
+function Slider({ show, onClose, title, children }: PropsWithChildren<SliderProps>) {
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
