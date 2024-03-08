@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { updatePost } from "../../services/postService";
@@ -38,7 +38,7 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
     }
   };
 
-  const handleUpdateImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const selectedImage = e.target.files?.[0];
     if (selectedImage) {
       const image = await uploadImage(selectedImage);

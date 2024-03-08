@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
@@ -56,7 +56,7 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
     };
 
     //TODO : server cant save large pictures -> need to Increase Server's Payload Limit ?
-    const handleImageChange: React.ChangeEventHandler<HTMLInputElement>  = (e) => {
+    const handleImageChange: ChangeEventHandler<HTMLInputElement>  = (e) => {
         const selectedImage = e.target.files?.[0];
         if (selectedImage) {
             const reader = new FileReader();
