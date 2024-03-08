@@ -64,7 +64,7 @@ function Register() {
         return;
       }
 
-      const { data: registerRes } = await registerMutation.mutateAsync({
+      await registerMutation.mutateAsync({
         name,
         email,
         password,
