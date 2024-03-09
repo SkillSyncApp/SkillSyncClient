@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import fs from 'fs';
 
 export default defineConfig({
+  //TODO - remove from github
   server: {
     port: 443,
     https: {

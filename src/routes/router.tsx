@@ -7,6 +7,7 @@ import Login from "../views/login/Login";
 import Profile from "../views/profile/Profile";
 import Register from "../views/register/Register";
 import LogInGoogle from "../views/additionalInfoGoogle/AdditionalInfo";
+import { NotFound } from "../views/notFound/NotFound";
 
 const authLoader = async () => {
   const tokens = getTokens();
@@ -44,5 +45,9 @@ export const router = createBrowserRouter([
   {
     path: "/logInGoogle",
     element: <LogInGoogle />
-  }
+  },
+  {
+    path: "*",
+    element: <NotFound/>
+  },
 ]);
