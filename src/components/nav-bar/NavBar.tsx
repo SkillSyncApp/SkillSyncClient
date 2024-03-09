@@ -8,8 +8,10 @@ function NavBar() {
   const userImage = user ? user.image : undefined;
 
   return (
-    <nav className="flex p-6 items-center">
-      <h1 className="font-bold text-2xl text-white mr-auto">SKILLSYNC</h1>
+    <nav className="flex p-6 items-center justify-between">
+      <Link to="/">
+        <h1 className="font-bold text-2xl text-white mr-auto cursor-pointer">SKILLSYNC</h1>
+      </Link>
       <Link to="/profile">
         <ProfileImage
           src={userImage}
