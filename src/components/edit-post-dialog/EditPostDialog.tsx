@@ -30,6 +30,11 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
 
   const updatePostData = async () => {
     try {
+      if (!title.trim() || !content.trim()) {
+        toast.error("Title and content must not be empty");
+        return;
+      }
+      
       await updatePostMutation.mutateAsync({ title, content, image });
       toast.success("Post updated successfully");
       onClose();

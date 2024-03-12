@@ -46,7 +46,6 @@ function PostItem({
           />
           <div>
             <UserOverview id={post.ownerId._id} name={post.ownerId.name}/>
-            {/* <h3 className="font-bold text-lg">{post.ownerId.name}</h3> */}
             <div className="opacity-50 text-sm">{post.ownerId.type}</div>
           </div>
         </div>
