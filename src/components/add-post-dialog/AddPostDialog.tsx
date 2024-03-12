@@ -18,14 +18,17 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState<{ originalName: string; serverFilename: string } | null>(null);
 
     const uploadFile = async ({ target }: { target: HTMLInputElement }) => {
         if (target.files?.length) {
             const [file] = target.files;
             console.log(URL.createObjectURL(file));
             const image = await uploadImage(file);
-            setImage(image.data.url)
+            setImage({
+                originalName: image.data.originalName,
+                serverFilename: image.data.serverFilename
+            })
         }
     };
 
