@@ -18,7 +18,7 @@ function Inbox() {
     const user = useRecoilValue(userState);
 
     const queryClient = useQueryClient();
-    const { data: conversationsData, isLoading: isConversationsLoading } = useQuery(GET_CONVERSATIONS, getConversations);
+    const { data: conversationsData, isLoading: isConversationsLoading } = useQuery(GET_CONVERSATIONS, getConversations, { });
     const conversations: Conversation[] = useMemo(() => conversationsData?.data || [], [conversationsData]);
 
     const { data: messagesData, isLoading: isMessagesLoading } = useQuery(
@@ -38,6 +38,7 @@ function Inbox() {
                 console.log('new message to display on current chat: ', content);
 
                 const conversation = conversations[selectedConversationId];
+                console.log({ selectedConversationId, conversations, conversation});
                 if (conversation) {
                     const conversationLead = conversation.users.find(conversationUser => conversationUser._id !== user._id);
 

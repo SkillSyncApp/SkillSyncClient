@@ -46,14 +46,20 @@ const useChatSocket = (onNewMessage: (data: RecieveNewMessageResponse) => void) 
 
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
-        socket.on('recieveMessage', onNewMessage);
-
 
         return () => {
             socket.off('connect', onConnect);
             socket.off('disconnect', onDisconnect);
         }
     }, []);
+
+    useEffect(() => {
+        socketInstance?.on('recieveMessage', onNewMessage);
+
+        return () => {
+            socketInstance?.off('recieveMessage', onNewMessage);
+        }
+    }, [socketInstance, onNewMessage])
 
     const sendMessage = (data: SendNewMessageInput) => {
         socketInstance?.emit('sendMessage', data);
