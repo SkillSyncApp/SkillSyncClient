@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
+import { GET_ALL_POSTS } from "../../query-keys/queries";
+import { uploadImage } from "../../services/fileUploadService";
 import { updatePost } from "../../services/postService";
 import { Post } from "../../types/Post";
-import Dialog from "../shared/dialog/Dialog";
 import ButtonGenerateContentAI from "../shared/button-generate-ai/ButtonGenerateContentAI";
-import { uploadImage } from "../../services/fileUploadService";
-import { GET_ALL_POSTS } from "../../query-keys/queries";
+import Dialog from "../shared/dialog/Dialog";
 
 import "./EditPostDialog.css";
 
@@ -126,7 +126,7 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
               <button
                 className="btn_upload_image"
                 onClick={handleUpdateImageChange}
-                >
+              >
                 Choose File
               </button>
               <span className="text-base ml-1">
