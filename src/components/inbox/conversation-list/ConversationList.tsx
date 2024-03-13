@@ -27,7 +27,7 @@ function ConversationList({ conversations, selectedConversationId, onConversatio
             onClick={() => onConversationSelect(conversation._id)}
         >
             <img className="circle w-[40px] h-[40px]" src={conversationLead?.image || DefaultProfileImage} />
-            <h2>{conversationLead?.name || 'unknown'}</h2>
+            <h2>{conversationLead?.name || 'unknown'}{(conversation.messagesBehind || 0) > 0 && <span className='rounded-full ml-2 bg-[#ff5252] text-white w-[20px] h-[20px] text-[12px] p-2'>{conversation.messagesBehind}</span>}</h2>
         </div>
     }
 
@@ -49,7 +49,7 @@ function ConversationList({ conversations, selectedConversationId, onConversatio
         </div>
     }
 
-    return <div className={`bg-white drop-shadow-lg z-10 ${loading || conversations.length !== 0 ? 'w-[250px]' : ''}`}>
+    return <div className={`bg-white drop-shadow-lg z-10 ${loading || conversations.length !== 0 ? 'w-[300px]' : ''}`}>
         {loading && conversationsSkeletonRenderer()}
         {conversations.map(conversationRenderer)}
     </div>
