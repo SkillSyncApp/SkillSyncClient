@@ -33,7 +33,7 @@ function PostItem({
       {post.image && (
         <div className="overflow-hidden group h-[180px] rounded-[8px] mb-3 flex-shrink-0">
           <img
-            src={post.image}
+            src={post.image.serverFilename}
             className="w-full h-full object-cover group-hover:scale-125 transition-all"
           />
         </div>
@@ -46,7 +46,6 @@ function PostItem({
           />
           <div>
             <UserOverview id={post.ownerId._id} name={post.ownerId.name}/>
-            {/* <h3 className="font-bold text-lg">{post.ownerId.name}</h3> */}
             <div className="opacity-50 text-sm">{post.ownerId.type}</div>
           </div>
         </div>

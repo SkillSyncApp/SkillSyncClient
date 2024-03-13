@@ -18,14 +18,17 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState<{ originalName: string; serverFilename: string } | null>(null);
 
     const uploadFile = async ({ target }: { target: HTMLInputElement }) => {
         if (target.files?.length) {
             const [file] = target.files;
             console.log(URL.createObjectURL(file));
             const image = await uploadImage(file);
-            setImage(image.data.url)
+            setImage({
+                originalName: image.data.originalName,
+                serverFilename: image.data.serverFilename
+            })
         }
     };
 
@@ -49,7 +52,8 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
     return <Dialog show={show} onClose={onClose} title='Add Post'>
         <div className="flex flex-col gap-3 pt-5">
             <div>
-                <label htmlFor="title" className="block mb-2 text-sm text-gray-700">Title</label>
+                <label htmlFor="title" className="block mb-2 text-sm text-gray-700">Title
+                <span className="text-red-500">*</span></label>
                 <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
         <div>
@@ -57,6 +61,7 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
                 <div className="flex flex-row items-center gap-4">
                     <label htmlFor="content" className="block text-sm text-gray-700">
                         Content
+                        <span className="text-red-500">*</span>
                     </label>
                     <ButtonGenerateContentAI title = {title} setContent={setContent}/>
                 </div>
