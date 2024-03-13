@@ -2,7 +2,7 @@ import { Message } from "../../../types/Message";
 import MessageItem from "../message-item/MessageItem";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../store/atoms/userAtom";
-import { useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import SkeletonMessageItem from "../message-item/SkeletonMessageItem";
 
 type ConversationChatProps = {
@@ -16,7 +16,7 @@ function ConversationChat({ messages, onNewMessage, loading = true }: Conversati
 
     const [newMessage, setNewMessage] = useState('');
 
-    const handleNewMessageChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleNewMessageChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         setNewMessage(event.target.value);
     }
 
