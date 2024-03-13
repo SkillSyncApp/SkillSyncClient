@@ -2,7 +2,7 @@ import { Message } from "../../../types/Message";
 import MessageItem from "../message-item/MessageItem";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../store/atoms/userAtom";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import SkeletonMessageItem from "../message-item/SkeletonMessageItem";
 
 type ConversationChatProps = {
@@ -15,6 +15,7 @@ function ConversationChat({ messages, onNewMessage, loading = true }: Conversati
     const user = useRecoilValue(userState);
 
     const [newMessage, setNewMessage] = useState('');
+    const messagesWrapperRef = useRef<HTMLDivElement>(null);
 
     const handleNewMessageChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         setNewMessage(event.target.value);
@@ -24,6 +25,11 @@ function ConversationChat({ messages, onNewMessage, loading = true }: Conversati
         onNewMessage(newMessage);
         setNewMessage('');
     }
+
+    useEffect(() => {
+        const lastCommentElement = messagesWrapperRef.current?.lastElementChild?.lastElementChild;
+        lastCommentElement?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages])
 
     return <div className="flex-1 flex flex-col overflow-hidden">
         {loading &&
@@ -38,7 +44,7 @@ function ConversationChat({ messages, onNewMessage, loading = true }: Conversati
                 No messages yet.. <br />be the first to start the conversation!
             </div>}
         {messages.length > 0 && !loading &&
-            <div className="flex flex-col gap-5 px-[30px] py-5 flex-1 overflow-scroll">
+            <div className="flex flex-col gap-5 px-[30px] py-5 flex-1 overflow-scroll" ref={messagesWrapperRef}>
                 {messages.map((message, index) => (
                     <MessageItem message={message} style={{ alignSelf: message.sender._id === user._id ? 'end' : 'start' }} key={`message-${message.sender._id}-${index}`} />
                 ))}
