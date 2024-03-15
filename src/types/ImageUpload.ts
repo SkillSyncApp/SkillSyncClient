@@ -1,4 +1,4 @@
 export type ImageUploadResponse = {
-    originalName: string;
-    serverFilename: string;
-}
+  originalName: string;
+  serverFilename: string;
+};
