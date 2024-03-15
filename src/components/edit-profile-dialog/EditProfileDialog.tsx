@@ -60,11 +60,16 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
     }
   };
 
-  //TODO : server cant save large pictures -> need to Increase Server's Payload Limit ?
   const handleImageChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const selectedImage = e.target.files?.[0];
+
     if (selectedImage) {
       const reader = new FileReader();
+      const maxSize = 10 * 1024 * 1024; // 10MB - adjust as needed
+      if (selectedImage.size > maxSize) {
+        toast.error( "Selected image exceeds the maximum file size allowed by the server.");
+        return;
+      }
       reader.onloadend = () => {
         setImage(reader.result as string); // Convert to base64 string
       };
