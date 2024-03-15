@@ -4,15 +4,17 @@ import { Conversation } from "../../../types/Conversation";
 import './ConversationList.css';
 import { userState } from '../../../store/atoms/userAtom';
 import classNames from 'classnames';
+import { ChatBubbleBottomCenterTextIcon as ChatIcon } from "@heroicons/react/24/outline";
 
 type ConversationListProps = {
     conversations: Conversation[];
     selectedConversationId: Conversation['_id'] | undefined;
     onConversationSelect: (conversationId: Conversation['_id']) => void;
+    onStartNewConversation: () => void;
     loading: boolean;
 }
 
-function ConversationList({ conversations, selectedConversationId, onConversationSelect, loading }: ConversationListProps) {
+function ConversationList({ conversations, selectedConversationId, onConversationSelect, onStartNewConversation, loading }: ConversationListProps) {
     const user = useRecoilValue(userState);
 
     const conversationRenderer = (conversation: Conversation) => {
@@ -51,6 +53,10 @@ function ConversationList({ conversations, selectedConversationId, onConversatio
 
     return <div className={`bg-white drop-shadow-lg z-10 ${loading || conversations.length !== 0 ? 'w-[300px]' : ''}`}>
         {loading && conversationsSkeletonRenderer()}
+        {!loading && <div className='p-3 flex gap-2 items-center justify-center bg-lightgray cursor-pointer' onClick={onStartNewConversation}>
+            <ChatIcon className='w-[20px] h-[20px]'/>
+            Start new conversation
+            </div>}
         {conversations.map(conversationRenderer)}
     </div>
 }

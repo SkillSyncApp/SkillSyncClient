@@ -1,9 +1,15 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { GET_CONVERSATIONS, GET_CONVERSATION_WITH } from "../query-keys/queries";
+import { addConversation, getConversationWith } from "../services/chatService";
+import { Conversation } from "../types/Conversation";
 import { User } from "../types/User";
-import { getConversationWith, addConversation } from "../services/ChatService";
-import { GET_CONVERSATION_WITH } from "../query-keys/queries";
 
-const useConversationWith = (userId: User['_id']) => {
+const useConversationWith = (userId?: User['_id']) => {
+    const navigate = useNavigate();
+
+    const queryClient = useQueryClient();
+
     const { refetch: getConversationWithQuery } = useQuery([GET_CONVERSATION_WITH, userId],
         () => getConversationWith(userId), {
         enabled: false,
@@ -11,7 +17,15 @@ const useConversationWith = (userId: User['_id']) => {
 
     const startConversationWithMutation = useMutation(() =>
         addConversation(userId)
-    );
+        , {
+            onSuccess: () => {
+                queryClient.invalidateQueries(GET_CONVERSATIONS);
+            },
+        });
+
+    const goToConversation = (conversationId: Conversation['_id']) => {
+        navigate(`/inbox/${conversationId}`, { replace: true });
+    }
 
     const getConversation = async () => {
         const conversation = await getConversationWithQuery();
@@ -23,10 +37,12 @@ const useConversationWith = (userId: User['_id']) => {
 
     const startConversation = async () => {
         const newConversation = await startConversationWithMutation.mutateAsync();
-        return newConversation.data;
+        if (newConversation.data._id) {
+            goToConversation(newConversation.data._id);
+        }
     }
 
-    return { getConversation, startConversation };
+    return { getConversation, startConversation, goToConversation };
 };
 
 export default useConversationWith;
