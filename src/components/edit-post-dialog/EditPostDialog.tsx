@@ -63,6 +63,13 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
 
   const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImage = e.target.files?.[0];
+
+    const maxSize = 10 * 1024 * 1024; // 10MB - adjust as needed
+    if (selectedImage?.size && selectedImage.size > maxSize) {
+      toast.error("Selected image exceeds the maximum file size allowed.");
+      return;
+    }
+
     if (selectedImage) {
       const image = await uploadImage(selectedImage);
       setImage(image?.data);
