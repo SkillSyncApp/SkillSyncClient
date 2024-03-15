@@ -45,17 +45,20 @@ function ConversationList({ conversations, selectedConversationId, onConversatio
                 key={index}
                 className="conversation-overview cursor-pointer hover:bg-lightgray pl-[20px] pr-[70px] py-[15px] flex items-center gap-2"
             >
-                <div className="circle w-[40px] h-[40px] bg-midgray flex-none"/>
-                <div className="h-[14px] bg-midgray rounded-lg" style={{ width: getRandomWidth() }}/>
+                <div className="circle w-[40px] h-[40px] bg-midgray flex-none" />
+                <div className="h-[14px] bg-midgray rounded-lg" style={{ width: getRandomWidth() }} />
             </div>)}
         </div>
     }
 
     return <div className={`bg-white drop-shadow-lg z-10 ${loading || conversations.length !== 0 ? 'w-[300px]' : ''}`}>
         {loading && conversationsSkeletonRenderer()}
-        {!loading && <div className='p-3 flex gap-2 items-center justify-center bg-lightgray cursor-pointer' onClick={onStartNewConversation}>
-            <ChatIcon className='w-[20px] h-[20px]'/>
-            Start new conversation
+        {!loading && conversations.length > 0 &&
+            <div className='p-3 flex gap-2 items-center justify-center bg-lightgray cursor-pointer'
+                style={{ borderBottom: "1px solid #c0c0c0" }}
+                onClick={onStartNewConversation}>
+                <ChatIcon className='w-[20px] h-[20px]' />
+                Start new conversation
             </div>}
         {conversations.map(conversationRenderer)}
     </div>

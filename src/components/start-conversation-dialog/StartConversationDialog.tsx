@@ -53,6 +53,7 @@ function StartConversationDialog({ show, onClose }: StartConversationDialogProps
                         <span className="text-sm opacity-30">({user.type})</span>
                     </div>
                 ))}
+                {filteredUsers.length === 0 && <span className="text-sm opacity-50 text-center"><b>Oops, no results</b><br/>try to search something else</span>}
             </div>
 
         </div>
