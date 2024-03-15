@@ -14,7 +14,7 @@ function NavBar() {
       </Link>
       <Link to="/profile">
         <ProfileImage
-          src={userImage}
+          src={userImage?.serverFilename}
           className="bg-white w-[40px] h-[40px] object-cover cursor-pointer"
         />
       </Link>

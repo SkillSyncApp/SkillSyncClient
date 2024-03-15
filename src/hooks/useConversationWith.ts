@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { GET_CONVERSATIONS, GET_CONVERSATION_WITH } from "../query-keys/queries";
-import { addConversation, getConversationWith } from "../services/chatService";
+import { addConversation, getConversationWith } from "../services/ChatService";
 import { Conversation } from "../types/Conversation";
 import { User } from "../types/User";
 

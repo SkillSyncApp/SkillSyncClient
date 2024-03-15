@@ -7,7 +7,7 @@ export type Post = {
   ownerId: PostOwner;
   title: string;
   content: string;
-  image: { originalName: string; serverFilename: string } | null;
+  image?: { originalName: string; serverFilename: string };
   commentsCount: number;
 };
 
@@ -16,5 +16,5 @@ export type CreatePostInput = Pick<Post, "title" | "content" | "image">;
 export type UpdatePostInput = {
   title?: string;
   content?: string;
-  image?: { originalName: string; serverFilename: string } | null;
+  image?: { originalName: string; serverFilename: string };
 };

@@ -27,8 +27,9 @@ function Discover() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.type == "unknown" || user.bio == "") navigate("/logInGoogle", { replace: true });
-  }, [user.type]);
+    if (user.type == "unknown" || user.bio == "")
+      navigate("/logInGoogle", { replace: true });
+  }, [user.type, user.bio]);
 
   const deletePostMutation = useMutation(
     (postId: Post["_id"]) => deletePost(postId),

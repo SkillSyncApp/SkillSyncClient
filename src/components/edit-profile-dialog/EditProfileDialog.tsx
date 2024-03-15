@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
@@ -7,6 +7,8 @@ import { updateUserProfile } from "../../services/authService";
 import { userState } from "../../store/atoms/userAtom";
 import { UpdateUserInput } from "../../types/User";
 import Dialog from "../shared/dialog/Dialog";
+import { uploadImage } from "../../services/fileUploadService";
+import { truncateMiddle } from "../../utils/truncate";
 
 type EditProfileDialogProps = {
   show: boolean;
@@ -18,9 +20,13 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
 
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
-  const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<{
+    originalName: string;
+    serverFilename: string;
+  } | null>(null);
 
   const [user, setUser] = useRecoilState(userState);
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const updateProfileMutation = useMutation(
     (updatedUserValues: UpdateUserInput) =>
@@ -35,7 +41,7 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
   useEffect(() => {
     setName(user.name);
     setBio(user.bio);
-    setImage(user.image || "");
+    setImage(user.image ?? null);
   }, [user]);
 
   const handleUpdate = async () => {
@@ -45,7 +51,7 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
         bio,
       };
 
-      profileData.image = image || "";
+      profileData.image = image || undefined;
 
       const updatedProfile = await updateProfileMutation.mutateAsync(
         profileData
@@ -60,20 +66,25 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
     }
   };
 
-  const handleImageChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleUpdateImageChange = async () => {
+    // Trigger the file input click event when the button is clicked
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  };
+
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const selectedImage = e.target.files?.[0];
 
+    const maxSize = 10 * 1024 * 1024; // 10MB - adjust as needed
+    if (selectedImage?.size && selectedImage.size > maxSize) {
+      toast.error("Selected image exceeds the maximum file size allowed.");
+      return;
+    }
+
     if (selectedImage) {
-      const reader = new FileReader();
-      const maxSize = 10 * 1024 * 1024; // 10MB - adjust as needed
-      if (selectedImage.size > maxSize) {
-        toast.error( "Selected image exceeds the maximum file size allowed by the server.");
-        return;
-      }
-      reader.onloadend = () => {
-        setImage(reader.result as string); // Convert to base64 string
-      };
-      reader.readAsDataURL(selectedImage);
+      const image = await uploadImage(selectedImage);
+      setImage(image?.data);
     }
   };
 
@@ -118,13 +129,27 @@ function EditProfileDialog({ show, onClose }: EditProfileDialogProps) {
           >
             Profile Picture
           </label>
-          <input
-            type="file"
-            id="edit-image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="mt-1 p-2"
-          />
+          <div className="flex items-center gap-2">
+            <label
+              htmlFor="image"
+              className="input_image cursor-pointer rounded-sm"
+            >
+              <button className="btn_upload_image" onClick={handleUpdateImageChange}>
+                Choose File
+              </button>
+              <span className="text-base ml-1">
+                {truncateMiddle(image?.originalName || "No file chosen", 32)}
+              </span>
+              <input
+                id="image"
+                type="file"
+                ref={inputFileRef}
+                accept=".png, .jpg, .jpeg, .svg"
+                onChange={handleImageChange}
+                className="hidden" // Hide the file input visually
+              />
+            </label>
+          </div>
         </div>
         <button onClick={handleUpdate}>Update</button>
       </div>

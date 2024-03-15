@@ -5,7 +5,7 @@ export type User = {
   email: string;
   name: string;
   type: UserType;
-  image?: string;
+  image?: { originalName: string; serverFilename: string };
   bio: string;
 };
 

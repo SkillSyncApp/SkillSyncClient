@@ -10,7 +10,7 @@ type CommentItemProps = {
 function CommentItem({ comment }: CommentItemProps) {
     return <div className="comment p-4 flex-col gap-3">
         <div className='flex gap-3'>
-            <ProfileImage src={comment.userId.image} className='shadow-md h-[40px] w-[40px]' />
+            <ProfileImage src={comment.userId.image?.serverFilename} className='shadow-md h-[40px] w-[40px]' />
             <div className='content flex flex-col'>
                 <UserOverview id={comment.userId._id} name={comment.userId.name} />
                 <span className='time opacity-60 text-[14px]'>{formattedDate(comment.createdAt)}</span>

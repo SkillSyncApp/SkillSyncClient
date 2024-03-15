@@ -2,12 +2,14 @@ import DefaultProfileImage from '../../assets/images/profile-image.png';
 import classnames from 'classnames';
 
 type ProfileImageProps = {
-    src: string | undefined;
+    src?: string;
     className?: string;
 }
 
 function ProfileImage({ src, className = "" }: ProfileImageProps) {
-    return <img className={classnames("circle object-cover", className)} src={src || DefaultProfileImage}/>
+    const source = src ?? DefaultProfileImage;
+
+    return <img className={classnames("circle object-cover", className)} src={source}/>
 }
 
 export default ProfileImage;

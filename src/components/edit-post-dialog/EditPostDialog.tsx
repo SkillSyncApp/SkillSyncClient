@@ -7,6 +7,7 @@ import { updatePost } from "../../services/postService";
 import { Post } from "../../types/Post";
 import ButtonGenerateContentAI from "../shared/button-generate-ai/ButtonGenerateContentAI";
 import Dialog from "../shared/dialog/Dialog";
+import { truncateMiddle } from "../../utils/truncate";
 
 import "./EditPostDialog.css";
 
@@ -76,18 +77,6 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
     }
   };
 
-  function truncateMiddle(str: string, maxLength: number) {
-    if (str.length <= maxLength) {
-      return str;
-    }
-
-    const startLength = Math.ceil((maxLength - 3) / 2);
-    const endLength = Math.floor((maxLength - 3) / 2);
-    return (
-      str.substring(0, startLength) + "..." + str.substring(str.length - endLength)
-    );
-  }
-
   return (
     <Dialog show={show} onClose={onClose} title="Edit Post">
       <div className="flex flex-col gap-3 pt-5">
@@ -137,7 +126,7 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
                 Choose File
               </button>
               <span className="text-base ml-1">
-                {truncateMiddle(image?.originalName || "No file chosen", 35)}
+                {truncateMiddle(image?.originalName || "No file chosen", 32)}
               </span>
               <input
                 id="image"

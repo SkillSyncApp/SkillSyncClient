@@ -33,7 +33,6 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
         return;
       }
 
-      console.log(URL.createObjectURL(file));
       const image = await uploadImage(file);
       setImage({
         originalName: image.data.originalName,
