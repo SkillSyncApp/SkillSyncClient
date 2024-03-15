@@ -88,9 +88,9 @@ function Register() {
           />
           {id === "password" && (
             <div
-            className="absolute inset-y-0 right-0 px-3 py-2 flex items-center cursor-pointer"
-            onClick={() => setShowPassword(!showPassword)}
-          >
+              className="absolute inset-y-0 right-0 px-3 py-2 flex items-center cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? (
                 <EyeIcon className="h-4 w-4 text-black" />
               ) : (
