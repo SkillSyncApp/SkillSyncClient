@@ -34,8 +34,9 @@ function Profile() {
   };
 
   useEffect(() => {
-    if (user.type == "unknown" || user.bio == "") navigate("/logInGoogle", { replace: true });
-  },[user.type]);
+    if (user.type == "unknown" || user.bio == "")
+      navigate("/logInGoogle", { replace: true });
+  }, [user.type, user.bio]);
 
   const logout = async () => {
     try {
@@ -55,7 +56,7 @@ function Profile() {
   return (
     <div className="flex-1 bg-lightgray flex flex-col items-center p-[70px] relative">
       <ProfileImage
-        src={user.image || undefined}
+        src={user.image?.serverFilename}
         className="w-[200px] h-[200px] object-cover drop-shadow-lg"
       />
       <h2 className="pt-5 font-bold text-2xl">{user.name}</h2>

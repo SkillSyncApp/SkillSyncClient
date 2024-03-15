@@ -28,7 +28,7 @@ function ConversationList({ conversations, selectedConversationId, onConversatio
             className={`conversation-overview cursor-pointer hover:bg-lightgray pl-[20px] pr-[70px] py-[15px] flex items-center gap-2 ${conversationClass}`}
             onClick={() => onConversationSelect(conversation._id)}
         >
-            <img className="circle w-[40px] h-[40px]" src={conversationLead?.image || DefaultProfileImage} />
+            <img className="circle w-[40px] h-[40px]" src={conversationLead?.image?.serverFilename || DefaultProfileImage} />
             <h2>{conversationLead?.name || 'unknown'}{(conversation.messagesBehind || 0) > 0 && <span className='rounded-full ml-2 bg-[#ff5252] text-white w-[20px] h-[20px] text-[12px] p-2'>{conversation.messagesBehind}</span>}</h2>
         </div>
     }

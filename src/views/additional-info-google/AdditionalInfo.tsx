@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { userState } from "../../store/atoms/userAtom";
@@ -27,10 +27,6 @@ function AdditionalInfo() {
       },
     }
   );
-
-  useEffect(() => {
-    if (user.type != "unknown") navigate("/");
-  }, [user.type]);
 
   const validateForm = () => {
     if (!bio) {

@@ -48,7 +48,7 @@ function StartConversationDialog({ show, onClose }: StartConversationDialogProps
             <div className="overflow-y-scroll h-[300px] flex flex-col gap-1 ">
                 {filteredUsers.map(user => (
                     <div onClick={() => setSelectedUserId(user._id)} className="py-2 px-2 flex items-center gap-2 hover:bg-lightgray rounded-md cursor-pointer">
-                        <ProfileImage src={user.image} className="w-[20px] h-[20px]" />
+                        <ProfileImage src={user.image?.serverFilename} className="w-[20px] h-[20px]" />
                         <span className="text-md font-medium">{user.name}</span>
                         <span className="text-sm opacity-30">({user.type})</span>
                     </div>

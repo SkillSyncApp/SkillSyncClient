@@ -41,7 +41,7 @@ function PostItem({
       <div className="flex justify-between items-center">
         <div className="flex gap-2">
           <ProfileImage
-            src={post.ownerId.image}
+            src={post.ownerId.image?.serverFilename}
             className="h-[50px] w-[50px] rounded-xl"
           />
           <div>

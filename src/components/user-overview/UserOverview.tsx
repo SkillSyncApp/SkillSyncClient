@@ -78,7 +78,7 @@ function UserOverview({ id, name }: UserOverviewProps) {
               <XMarkIcon className="w-6 h-6" />
             </div>
             <ProfileImage
-              src={userData.image}
+              src={userData.image?.serverFilename}
               className="w-[100px] h-[100px] mb-4"
             />
             <div className="text-lg font-bold">{userData.name}</div>
