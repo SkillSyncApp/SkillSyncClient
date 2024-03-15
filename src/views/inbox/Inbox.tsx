@@ -14,6 +14,7 @@ import { Message } from "../../types/Message";
 import Lottie from 'react-lottie';
 import ChatAnimation from './chat-animation.json';
 import StartConversationDialog from "../../components/start-conversation-dialog/StartConversationDialog";
+import { ChatBubbleBottomCenterTextIcon as ChatIcon } from "@heroicons/react/24/outline";
 
 function Inbox() {
     const navigate = useNavigate();
@@ -96,7 +97,7 @@ function Inbox() {
     }, [conversations])
 
     return <div className="flex flex-1">
-        <StartConversationDialog show={showStartConversationDialog} onClose={() => setShowStartConversationDialog(false)}/>
+        <StartConversationDialog show={showStartConversationDialog} onClose={() => setShowStartConversationDialog(false)} />
         <ConversationList
             conversations={conversations}
             selectedConversationId={selectedConversationId}
@@ -117,6 +118,11 @@ function Inbox() {
                         <>
                             <div className="font-bold opacity-60 text-lg">no conversations yet</div>
                             <div className="opacity-60 text-sm">it's time to start contact with other users</div>
+                            {!isConversationsLoading &&
+                                <button className="px-2 py-1 mt-3 bg-[#8666fe]" onClick={() => setShowStartConversationDialog(true)}>
+                                    Start conversation
+                                </button>
+                            }
                         </> :
                         <>
                             <div className="font-bold opacity-60 text-lg">no conversation was chosen</div>
