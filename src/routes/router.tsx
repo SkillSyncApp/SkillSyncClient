@@ -6,8 +6,8 @@ import Inbox from "../views/inbox/Inbox";
 import Login from "../views/login/Login";
 import Profile from "../views/profile/Profile";
 import Register from "../views/register/Register";
-import LogInGoogle from "../views/additionalInfoGoogle/AdditionalInfo";
-import { NotFound } from "../views/notFound/NotFound";
+import LogInGoogle from "../views/additional-info-google/AdditionalInfo";
+import { NotFound } from "../views/not-found/NotFound";
 
 const authLoader = async () => {
   const tokens = getTokens();

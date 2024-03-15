@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import MessagesIcon from '../../assets/images/messages.png';
+// import MessagesIcon from '../../assets/images/messages.png';
 import ConversationList from "../../components/inbox/conversation-list/ConversationList";
 import ConversationChat from "../../components/inbox/conversationChat/ConversationChat";
 import useChatSocket, { RecieveNewMessageResponse } from "../../hooks/useChatSocket";
@@ -12,15 +12,18 @@ import { userState } from "../../store/atoms/userAtom";
 import { Conversation } from "../../types/Conversation";
 import { Message } from "../../types/Message";
 import Lottie from 'react-lottie';
-import ComputerAnimation from './chat-animation.json';
+import ChatAnimation from './chat-animation.json';
+import StartConversationDialog from "../../components/start-conversation-dialog/StartConversationDialog";
 
 function Inbox() {
     const navigate = useNavigate();
     const { conversationId: selectedConversationId } = useParams();
     const user = useRecoilValue(userState);
 
+    const [showStartConversationDialog, setShowStartConversationDialog] = useState(false);
+
     const queryClient = useQueryClient();
-    const { data: conversationsData, isLoading: isConversationsLoading } = useQuery(GET_CONVERSATIONS, getConversations, { });
+    const { data: conversationsData, isLoading: isConversationsLoading } = useQuery(GET_CONVERSATIONS, getConversations, { cacheTime: 0 });
     const conversations: Conversation[] = useMemo(() => conversationsData?.data || [], [conversationsData]);
 
     const { data: messagesData, isLoading: isMessagesLoading } = useQuery(
@@ -40,7 +43,7 @@ function Inbox() {
                 console.log('new message to display on current chat: ', content);
 
                 const conversation = conversations[selectedConversationId];
-                console.log({ selectedConversationId, conversations, conversation});
+                console.log({ selectedConversationId, conversations, conversation });
                 if (conversation) {
                     const conversationLead = conversation.users.find(conversationUser => conversationUser._id !== user._id);
 
@@ -93,10 +96,12 @@ function Inbox() {
     }, [conversations])
 
     return <div className="flex flex-1">
+        <StartConversationDialog show={showStartConversationDialog} onClose={() => setShowStartConversationDialog(false)}/>
         <ConversationList
             conversations={conversations}
             selectedConversationId={selectedConversationId}
             onConversationSelect={onConversationSelect}
+            onStartNewConversation={() => setShowStartConversationDialog(true)}
             loading={isConversationsLoading}
         />
         {selectedConversationId ?
@@ -105,7 +110,7 @@ function Inbox() {
                 loading={isMessagesLoading}
             /> :
             <div className="flex-1 flex flex-col items-center justify-center">
-                <Lottie options={{ animationData: ComputerAnimation, loop: true }} isClickToPauseDisabled style={{ height: 300, width: 400, cursor: "default" }}/>
+                <Lottie options={{ animationData: ChatAnimation, loop: true }} isClickToPauseDisabled style={{ height: 300, width: 400, cursor: "default" }} />
                 {/* <img src={MessagesIcon} className="h-[250px] drop-shadow-lg" /> */}
                 {
                     conversations.length === 0 ?

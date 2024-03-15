@@ -25,7 +25,7 @@ function UserOverview({ id, name }: UserOverviewProps) {
 
   const currentUser = useRecoilValue(userState);
 
-  const { getConversation, startConversation } = useConversationWith(id);
+  const { getConversation, startConversation, goToConversation } = useConversationWith(id);
 
   const { data: profileData } = useQuery(
     [GET_USER_BY_ID, id],
@@ -49,10 +49,9 @@ function UserOverview({ id, name }: UserOverviewProps) {
   const goToChat = async () => {
     const conversationWithUser = await getConversation();
     if (conversationWithUser) {
-      navigate(`inbox/${conversationWithUser._id}`);
+      goToConversation(conversationWithUser._id);
     } else {
-      const newConversation = await startConversation();
-      navigate(`inbox/${newConversation._id}`);
+      await startConversation();
     }
   };
 

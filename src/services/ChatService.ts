@@ -9,11 +9,11 @@ export const getConversations = async (): Promise<AxiosResponse<Conversation[]>>
     return await apiClient.get(`/chat/conversation`, { headers: headers() });
 };
 
-export const getConversationWith = async (userId: User['_id']): Promise<AxiosResponse<Conversation | null>> => {
+export const getConversationWith = async (userId?: User['_id']): Promise<AxiosResponse<Conversation | null>> => {
     return await apiClient.get(`/chat/conversation/with/${userId}`, { headers: headers() });
 };
 
-export const addConversation = async (userId: User['_id']): Promise<AxiosResponse<Conversation>> => {
+export const addConversation = async (userId?: User['_id']): Promise<AxiosResponse<Conversation>> => {
     return await apiClient.post(`/chat/conversation/with/${userId}`, {}, { headers: headers() });
 }
 

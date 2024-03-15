@@ -1,5 +1,6 @@
 // users
 export const GET_USER_BY_ID = 'userById';
+export const GET_ALL_USERS = 'users';
 
 // posts
 export const GET_ALL_POSTS = 'posts';
