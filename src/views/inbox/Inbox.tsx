@@ -11,6 +11,8 @@ import { getConversations, getMessages } from "../../services/chatService";
 import { userState } from "../../store/atoms/userAtom";
 import { Conversation } from "../../types/Conversation";
 import { Message } from "../../types/Message";
+import Lottie from 'react-lottie';
+import ComputerAnimation from './chat-animation.json';
 
 function Inbox() {
     const navigate = useNavigate();
@@ -103,15 +105,16 @@ function Inbox() {
                 loading={isMessagesLoading}
             /> :
             <div className="flex-1 flex flex-col items-center justify-center">
-                <img src={MessagesIcon} className="h-[250px] drop-shadow-lg" />
+                <Lottie options={{ animationData: ComputerAnimation, loop: true }} isClickToPauseDisabled style={{ height: 300, width: 400, cursor: "default" }}/>
+                {/* <img src={MessagesIcon} className="h-[250px] drop-shadow-lg" /> */}
                 {
                     conversations.length === 0 ?
                         <>
-                            <div className="font-bold opacity-60 text-md">no conversations yet</div>
+                            <div className="font-bold opacity-60 text-lg">no conversations yet</div>
                             <div className="opacity-60 text-sm">it's time to start contact with other users</div>
                         </> :
                         <>
-                            <div className="font-bold opacity-60 text-md">no conversation was chosen</div>
+                            <div className="font-bold opacity-60 text-lg">no conversation was chosen</div>
                             <div className="opacity-60 text-sm">select a chat from the left pane</div>
                         </>
                 }
