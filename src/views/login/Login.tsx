@@ -45,7 +45,6 @@ function Login() {
       navigate("/", { replace: true });
     } catch (err) {
       toast.error("Login failed");
-      console.log(err);
     }
   };
 
@@ -61,6 +60,7 @@ function Login() {
         refreshToken: loginGoogleRes.refreshToken,
       });
       setUser(loginGoogleRes.user);
+      
       if (response.data.user?.type === "unknown")
         navigate("/logInGoogle", { replace: true });
       else navigate("/", { replace: true });

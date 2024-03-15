@@ -15,8 +15,8 @@ function AdditionalInfo() {
   const queryClient = useQueryClient();
 
   const [selectedType, setSelectedType] = useState("student");
-  const [bio, setBio] = useState("");
   const [user, setUser] = useRecoilState(userState);
+  const [bio, setBio] = useState("");
 
   const updateProfileMutation = useMutation(
     (updatedUserValues: UpdateUserGoogleInput) =>
@@ -29,13 +29,8 @@ function AdditionalInfo() {
   );
 
   useEffect(() => {
-    setBio(user.bio);
-    setSelectedType(user.type);
-  }, [user]);
-
-  useEffect(() => {
     if (user.type != "unknown") navigate("/");
-  }, [navigate, user.type]);
+  }, [user.type]);
 
   const validateForm = () => {
     if (!bio) {
@@ -59,6 +54,9 @@ function AdditionalInfo() {
         profileData
       );
       toast.success("Profile updated successfully");
+
+      setBio(user.bio);
+      setSelectedType(user.type);
 
       setUser({ ...user, ...updatedProfile.data.user });
       navigate("/", { replace: true });
@@ -106,6 +104,7 @@ function AdditionalInfo() {
         <div className="mb-3">
           <label htmlFor="bio" className="block mb-2 text-sm text-gray-700">
             Bio
+            <span className="text-red-500">*</span>
           </label>
           <textarea
             id="bio"
