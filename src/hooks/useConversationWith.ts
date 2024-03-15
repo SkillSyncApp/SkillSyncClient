@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "react-query";
 import { User } from "../types/User";
-import { getConversationWith, addConversation } from "../services/chatService";
+import { getConversationWith, addConversation } from "../services/ChatService";
 import { GET_CONVERSATION_WITH } from "../query-keys/queries";
 
 const useConversationWith = (userId: User['_id']) => {
