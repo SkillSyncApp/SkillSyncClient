@@ -1,3 +1,12 @@
 .conversation-overview {
-    border-bottom: 1px solid var(--color-lightgray);
+  border-bottom: 1px solid var(--color-lightgray);
+}
+
+.conversation-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.conversation-container::-webkit-scrollbar-track,
+.conversation-container::-webkit-scrollbar-thumb {
+  background-color: var(--color-lightgray);
 }
