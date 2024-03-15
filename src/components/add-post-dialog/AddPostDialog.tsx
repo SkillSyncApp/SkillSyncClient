@@ -52,7 +52,7 @@ function AddPostDialog({ show, onClose }: AddPostDialogProps) {
 
   const add = async () => {
     try {
-      await addPostMutation.mutateAsync({ title, content, image });
+      await addPostMutation.mutateAsync({ title, content });
       toast.success("Great! your new post is up");
       onClose();
     } catch (err) {

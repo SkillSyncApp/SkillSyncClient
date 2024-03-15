@@ -6,9 +6,15 @@ import "./index.css";
 
 const queryClient = new QueryClient();
 
+const googleClientId = import.meta.env.VITE_REACT_APP_GOOGLE_CLIENT_ID;
+
+if (!googleClientId) {
+  throw new Error("Google Client ID is not defined in environment variables");
+}
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   //TODO
-  <GoogleOAuthProvider clientId="1082363938325-knbmg18ijtmnqilhpr6k6rae35mda8rs.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId={googleClientId}>
     {/* <React.StrictMode> */}
     <QueryClientProvider client={queryClient}>
       <App />
