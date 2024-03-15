@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useMutation } from "react-query";
 import { register as registerRequest } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import Joi from "joi";
 import { Tooltip } from "react-tooltip";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 import "./Register.css";
 
@@ -17,6 +18,7 @@ function Register() {
   const [selectedType, setSelectedType] = useState("student");
   const [bio, setBio] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const schema = Joi.object({
     name: Joi.string()
@@ -50,7 +52,7 @@ function Register() {
   const renderInputField = (
     id: string,
     value: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void,
     label: string,
     tooltipKey: string
   ) => {
@@ -72,17 +74,33 @@ function Register() {
             }
           </Tooltip>
         </label>
-        <input
-          id={id}
-          value={value}
-          onChange={(e) => onChange(e)}
-          style={{
-            border: `1px solid ${hasError ? "red" : "transparent"}`,
-          }}
-          data-tip
-          data-for={`${tooltipKey}-tooltip`}
-        />
-        {formSubmitted && validationResult.error?.details.find(
+        <div className="relative">
+          <input
+            id={id}
+            value={value}
+            onChange={(e) => onChange(e)}
+            type={id === "password" && !showPassword ? "password" : "text"}
+            style={{
+              border: `1px solid ${hasError ? "red" : "transparent"}`,
+            }}
+            data-tip
+            data-for={`${tooltipKey}-tooltip`}
+          />
+          {id === "password" && (
+            <div
+            className="absolute inset-y-0 right-0 px-3 py-2 flex items-center cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+              {showPassword ? (
+                <EyeIcon className="h-4 w-4 text-black" />
+              ) : (
+                <EyeSlashIcon className="h-4 w-4 text-black" />
+              )}
+            </div>
+          )}
+        </div>
+        {formSubmitted &&
+        validationResult.error?.details.find(
           (detail) => detail.context?.key == tooltipKey
         ) ? (
           validationResult.error?.details.map((detail) => (
