@@ -9,7 +9,7 @@ import useChatSocket, {
   RecieveNewMessageResponse,
 } from "../../hooks/useChatSocket";
 import { GET_CONVERSATIONS, GET_MESSAGES } from "../../query-keys/queries";
-import { getConversations, getMessages } from "../../services/chatService";
+import { getConversations, getMessages } from "../../services/ChatService";
 import { userState } from "../../store/atoms/userAtom";
 import { Conversation } from "../../types/Conversation";
 import { Message } from "../../types/Message";
@@ -20,6 +20,10 @@ function Inbox() {
   const navigate = useNavigate();
   const { conversationId: selectedConversationId } = useParams();
   const user = useRecoilValue(userState);
+
+  useEffect(() => {
+    if (user.type == "unknown" || user.bio == "") navigate("/logInGoogle", { replace: true });
+  }, [user.type]);
 
   const queryClient = useQueryClient();
   const { data: conversationsData, isLoading: isConversationsLoading } =

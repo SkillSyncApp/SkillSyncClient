@@ -1,14 +1,19 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Fragment, PropsWithChildren } from 'react';
+import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Fragment, PropsWithChildren } from "react";
 
 type SliderProps = {
-  show: boolean,
-  onClose: () => void,
-  title: string,
+  show: boolean;
+  onClose: () => void;
+  title: string;
 };
 
-function Slider({ show, onClose, title, children }: PropsWithChildren<SliderProps>) {
+function Slider({
+  show,
+  onClose,
+  title,
+  children,
+}: PropsWithChildren<SliderProps>) {
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -64,9 +69,9 @@ function Slider({ show, onClose, title, children }: PropsWithChildren<SliderProp
                         {title}
                       </Dialog.Title>
                     </div>
-                      <div className="relative mt-6 flex flex-1 px-4 sm:px-6 overflow-hidden">
-                        {children}
-                      </div>
+                    <div className="relative mt-6 flex flex-1 px-4 sm:px-6 overflow-hidden">
+                      {children}
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

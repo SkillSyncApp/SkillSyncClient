@@ -1,7 +1,7 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Masonry from "react-masonry-css";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useRecoilValue } from "recoil";
@@ -15,6 +15,7 @@ import { userState } from "../../store/atoms/userAtom";
 import { Post } from "../../types/Post";
 import "./Discover.css";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Discover() {
   const user = useRecoilValue(userState);
@@ -23,6 +24,11 @@ function Discover() {
 
   const { data } = useQuery(GET_ALL_POSTS, getPosts, { staleTime: Infinity });
   const posts = data?.data || [];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.type == "unknown" || user.bio == "") navigate("/logInGoogle", { replace: true });
+  }, [user.type]);
 
   const deletePostMutation = useMutation(
     (postId: Post["_id"]) => deletePost(postId),
@@ -40,7 +46,12 @@ function Discover() {
   const [showEditPostDialog, setShowEditPostDialog] = useState(false);
   const [editPostData, setEditPostData] = useState<Post | undefined>(undefined);
 
-  const isBelongToCurrentUser = (post: Post) => post.ownerId._id === user._id;
+  const isBelongToCurrentUser = (post: Post) => {
+    if (user && post.ownerId && user._id) {
+      return post.ownerId._id === user._id;
+    }
+    return false;
+  };
   const usersPosts = posts.filter(isBelongToCurrentUser);
 
   const displayedPosts = showUsersPostsOnly ? usersPosts : posts;
