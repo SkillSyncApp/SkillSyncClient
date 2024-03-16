@@ -64,20 +64,22 @@ function Inbox() {
                 if (conversationId === selectedConversationId) {
                     console.log("new message to display on current chat: ", content);
 
-                    const conversation = conversations[selectedConversationId];
+                    const conversation = conversations.find(({ _id }) => _id === selectedConversationId);
                     console.log({ selectedConversationId, conversations, conversation });
                     if (conversation) {
                         const conversationLead = conversation.users.find(
                             (conversationUser) => conversationUser._id !== user._id
                         );
 
-                        const newMessages: Message[] = [
-                            ...selectedConversationMessages,
-                            { _id: messageId, content, createdAt, sender: conversationLead },
-                        ];
-                        queryClient.setQueryData([GET_MESSAGES, selectedConversationId], {
-                            data: newMessages,
-                        });
+                        if (conversationLead) {
+                            const newMessages: Message[] = [
+                                ...selectedConversationMessages,
+                                { _id: messageId, content, createdAt, sender: conversationLead },
+                            ];
+                            queryClient.setQueryData([GET_MESSAGES, selectedConversationId], {
+                                data: newMessages,
+                            });
+                        }
                     }
                 } else {
                     console.log("new message to display on background chat: ", content);
@@ -174,7 +176,7 @@ function Inbox() {
             }
             {selectedConversationId && !isValidConversation &&
                 <div className="flex-1 flex flex-col items-center justify-center">
-                    <Lottie isClickToPauseDisabled options={{ animationData: NoResultsAnimation }} style={{ width: 400, height: 200 }}/>
+                    <Lottie isClickToPauseDisabled options={{ animationData: NoResultsAnimation }} style={{ width: 400, height: 200 }} />
                     <span className="mt-2 text-lg opacity-80 font-bold">Conversation not found</span>
                     <span className="opacity-50">try to pick another chat</span>
                 </div>}
