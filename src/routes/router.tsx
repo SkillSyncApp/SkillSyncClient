@@ -23,7 +23,6 @@ export const router = createBrowserRouter([
     path: "/",
     element: <Dashboard />,
     loader: authLoader,
-    // TODO: implement error page
     errorElement: <ErrorBoundary/>,
     children: [
       { path: "/", element: <Discover /> },
