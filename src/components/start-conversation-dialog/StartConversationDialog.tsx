@@ -32,16 +32,11 @@ function StartConversationDialog({
 
     const [selectedUserId, setSelectedUserId] = useState<User["_id"]>();
 
-    const { getConversation, startConversation, goToConversation } =
+    const { startConversation } =
         useConversationWith(selectedUserId);
 
     const goToChat = async () => {
-        const conversationWithUser = await getConversation();
-        if (conversationWithUser) {
-            goToConversation(conversationWithUser._id);
-        } else {
-            startConversation();
-        }
+        await startConversation();
         onClose();
     };
 

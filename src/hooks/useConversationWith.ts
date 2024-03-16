@@ -35,14 +35,20 @@ const useConversationWith = (userId?: User['_id']) => {
         return null;
     }
 
-    const startConversation = async () => {
-        const newConversation = await startConversationWithMutation.mutateAsync();
-        if (newConversation.data._id) {
-            goToConversation(newConversation.data._id);
-        }
+    const createConversation = async () => {
+        return (await startConversationWithMutation.mutateAsync()).data;
     }
 
-    return { getConversation, startConversation, goToConversation };
+    const startConversation = async () => {
+        let conversation = await getConversation();
+        if (!conversation) {
+            conversation = await createConversation();
+        }
+
+        goToConversation(conversation._id);
+    }
+
+    return { startConversation };
 };
 
 export default useConversationWith;
