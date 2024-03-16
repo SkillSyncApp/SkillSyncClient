@@ -77,7 +77,7 @@ function Login() {
     <div className="h-[100vh] bg-primary flex items-center justify-center flex flex-col font-display">
       <div className="w-[500px] bg-white rounded-[20px] drop-shadow-lg py-[30px] px-[50px]">
         <div className="text-center mb-5 text-primary">
-            <Lottie options={{ animationData: ComputerAnimation }} style={{ width: 400, height: 200 }}/>
+            <Lottie isClickToPauseDisabled options={{ animationData: ComputerAnimation }} style={{ width: 400, height: 200 }}/>
           <p className="opacity-60">welcome to</p>
           <h1 className="font-bold text-4xl">SKILLSYNC</h1>
         </div>

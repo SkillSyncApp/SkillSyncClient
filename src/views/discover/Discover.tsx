@@ -16,13 +16,16 @@ import { Post } from "../../types/Post";
 import "./Discover.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Lottie from 'react-lottie';
+import NoPostsAnimation from './no-posts-animation.json';
+import LoadingPostsAnimation from './loading-posts-animation.json';
 
 function Discover() {
   const user = useRecoilValue(userState);
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(GET_ALL_POSTS, getPosts, { staleTime: Infinity });
+  const { data, isLoading: isPostsLoading } = useQuery(GET_ALL_POSTS, getPosts, { staleTime: Infinity });
   const posts = data?.data || [];
   const navigate = useNavigate();
 
@@ -86,7 +89,7 @@ function Discover() {
   return (
     <div className="flex flex-col flex-1">
       <div className="toolbar bg-white flex items-center p-5 shadow-lg z-10">
-        <p className="font-bold mr-4 flex items-center gap-1">
+        <p className="mr-4 flex items-center gap-1">
           <FunnelIcon width={18} height={18} className="inline-block" />
           Filters
         </p>
@@ -99,24 +102,38 @@ function Discover() {
           my posts
         </button>
       </div>
-      <Masonry
-        breakpointCols={2}
-        className="posts-grid flex-1 p-6"
-        columnClassName="posts-grid-column"
-      >
-        {displayedPosts.map((post) => (
-          <PostItem
-            key={post._id}
-            comments={{ show: true, onClick: () => showComments(post) }}
-            post={post}
-            style={{ maxHeight: 450 }}
-            {...(isBelongToCurrentUser(post) && {
-              onDelete: () => deleteUserPost(post._id),
-              onEdit: () => editUserPost(post), // Added onEdit prop
-            })}
-          />
-        ))}
-      </Masonry>
+      {displayedPosts.length > 0 && !isPostsLoading &&
+        <Masonry
+          breakpointCols={2}
+          className="posts-grid flex-1 p-6"
+          columnClassName="posts-grid-column"
+        >
+          {displayedPosts.map((post) => (
+            <PostItem
+              key={post._id}
+              comments={{ show: true, onClick: () => showComments(post) }}
+              post={post}
+              style={{ maxHeight: 450 }}
+              {...(isBelongToCurrentUser(post) && {
+                onDelete: () => deleteUserPost(post._id),
+                onEdit: () => editUserPost(post), // Added onEdit prop
+              })}
+            />
+          ))}
+        </Masonry>}
+      {displayedPosts.length === 0 && !isPostsLoading &&
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <Lottie isClickToPauseDisabled options={{ animationData: NoPostsAnimation }} style={{ width: 400, height: 200 }} />
+          <span className="mt-2 text-lg opacity-80 font-bold">Oops, not results</span>
+          <span className="opacity-50">you haven't posted anything yet</span>
+        </div>
+      }
+      {isPostsLoading &&
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <Lottie isClickToPauseDisabled options={{ animationData: LoadingPostsAnimation }} style={{ width: 400, height: 200 }} />
+          {/* <span className="mt-2 text-lg opacity-80 font-bold">Gathering posts...</span> */}
+        </div>
+      }
       <div
         className="group absolute z-20 bottom-[50px] right-[50px]"
         onClick={() => setShowAddPostDialog(true)}
