@@ -8,6 +8,7 @@ import Profile from "../views/profile/Profile";
 import Register from "../views/register/Register";
 import LogInGoogle from "../views/additional-info-google/AdditionalInfo";
 import { NotFound } from "../views/not-found/NotFound";
+import { ErrorBoundary } from "../views/error-boundary/ErrorBoundary";
 
 const authLoader = async () => {
   const tokens = getTokens();
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
     element: <Dashboard />,
     loader: authLoader,
     // TODO: implement error page
-    errorElement: <div>error</div>,
+    errorElement: <ErrorBoundary/>,
     children: [
       { path: "/", element: <Discover /> },
       {
