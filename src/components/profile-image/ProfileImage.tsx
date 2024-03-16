@@ -1,4 +1,4 @@
-import DefaultProfileImage from '../../assets/images/profile-image.png';
+import DefaultProfileImage from './default-image.png';
 import classnames from 'classnames';
 
 type ProfileImageProps = {

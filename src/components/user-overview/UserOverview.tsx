@@ -25,7 +25,7 @@ function UserOverview({ id, name }: UserOverviewProps) {
 
   const currentUser = useRecoilValue(userState);
 
-  const { getConversation, startConversation, goToConversation } = useConversationWith(id);
+  const { startConversation } = useConversationWith(id);
 
   const { data: profileData } = useQuery(
     [GET_USER_BY_ID, id],
@@ -47,12 +47,7 @@ function UserOverview({ id, name }: UserOverviewProps) {
 
   const getFirstName = (user: User) => user.name.split(" ")[0];
   const goToChat = async () => {
-    const conversationWithUser = await getConversation();
-    if (conversationWithUser) {
-      goToConversation(conversationWithUser._id);
-    } else {
-      await startConversation();
-    }
+    startConversation();
   };
 
   return (

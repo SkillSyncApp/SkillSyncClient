@@ -13,11 +13,12 @@ function ButtonGenerateContentAI({
 }: ButtonGenerateContentAIProps) {
   const generatePostContent = async () => {
     try {
-      if (title == "") {
+      if (title === "") {
         toast.error("Please fill title in order to generate content to post");
+      } else {
+        const postContent = await generatePost(title);
+        setContent(postContent);
       }
-      const postContent = await generatePost(title);
-      setContent(postContent);
     } catch (err) {
       toast.error("Failed to generate post content");
     }
