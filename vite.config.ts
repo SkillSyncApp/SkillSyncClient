@@ -10,6 +10,6 @@ export default defineConfig({
   //     cert: fs.readFileSync('../client-cert.pem'),
   //   },
   // },
-  base: "./",
+  base: "./public/client",
   plugins: [react()],
 })
