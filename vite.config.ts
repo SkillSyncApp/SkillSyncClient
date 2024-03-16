@@ -8,9 +8,9 @@ export default ({ mode }) => {
     base: "https://node03.cs.colman.ac.il/public/client",
     plugins: [react()],
     define: {
-      "__APP_OPENAI_API_KEY__": `"${process.env.VITE_REACT_APP_OPENAI_API_KEY}"`,
-      "__APP_API_URL__": `"${process.env.VITE_REACT_APP_API_URL}"`,
-      "__APP_GOOGLE_CLIENT_ID__": `"${process.env.VITE_REACT_APP_GOOGLE_CLIENT_ID}"`
+      "__REACT_APP_OPENAI_API_KEY__": `"${process.env.VITE_REACT_APP_OPENAI_API_KEY}"`,
+      "__REACT_APP_API_URL__": `"${process.env.VITE_REACT_APP_API_URL}"`,
+      "__REACT_APP_GOOGLE_CLIENT_ID__": `"${process.env.VITE_REACT_APP_GOOGLE_CLIENT_ID}"`
     }
   })
 }
