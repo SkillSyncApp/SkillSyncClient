@@ -1,12 +1,22 @@
 import { AxiosResponse } from "axios";
 import { UpdateUserGoogleInput, UpdateUserInput, User } from "../types/User";
 import apiClient from "./httpCommon";
-import { CredentialResponse } from "@react-oauth/google"
+import { CredentialResponse } from "@react-oauth/google";
 
-const ACCESS_TOKEN_KEY = "accessToken";
-const REFRESH_TOKEN_KEY = "refreshToken";
+const ACCESS_TOKEN_KEY = "access-token";
+const REFRESH_TOKEN_KEY = "refresh-token";
 
 export const headers = () => {
+  const tokens = getTokens();
+  if (tokens.accessToken) {
+    return {
+      Authorization: `Bearer ${tokens.accessToken}`,
+    };
+  }
+  return {};
+};
+
+export const refreshTokenHeaders = () => {
   const tokens = getTokens();
   if (tokens.refreshToken) {
     return {
@@ -25,7 +35,7 @@ export const getTokens = () => {
 
 export const saveTokens = ({
   accessToken,
-  refreshToken
+  refreshToken,
 }: {
   accessToken: string;
   refreshToken: string;
@@ -52,7 +62,11 @@ export const login = async (
 };
 
 export const logout = async () => {
-  return await apiClient.post("/auth/logout", {}, { headers: headers() });
+  return await apiClient.post(
+    "/auth/logout",
+    {},
+    { headers: refreshTokenHeaders() }
+  );
 };
 
 type RegistrationResponse = {
@@ -73,7 +87,7 @@ export const register = async (
     email,
     password,
     type,
-    bio
+    bio,
   });
 };
 
@@ -81,19 +95,34 @@ type GoogleSignInResponse = {
   user: User;
   accessToken: string;
   refreshToken: string;
-}
+};
 
 export const googleSignIn = async (
   credentialResponse: CredentialResponse,
   type?: string,
   bio?: string
-  ): Promise<AxiosResponse<GoogleSignInResponse>> => {
-    return await apiClient.post("/auth/google", {
-      credentialResponse,
-      type,
-      bio
-    })
-}
+): Promise<AxiosResponse<GoogleSignInResponse>> => {
+  return await apiClient.post("/auth/google", {
+    credentialResponse,
+    type,
+    bio,
+  });
+};
+
+type RefreshResponse = {
+  accessToken: string;
+  refreshToken: string;
+};
+
+export const refresh = async (): Promise<AxiosResponse<RefreshResponse>> => {
+  return await apiClient.post(
+    "/auth/refresh",
+    {},
+    {
+      headers: refreshTokenHeaders(),
+    }
+  );
+};
 
 export const updateUserProfile = async (
   updatedUser: UpdateUserInput
