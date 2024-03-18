@@ -4,8 +4,6 @@ import { Post } from '../../types/Post';
 import PostItem from '../post-item/PostItem';
 import Slider from '../shared/slider/Slider';
 import CommentItem from './comment-item/CommentItem';
-import { useRecoilValue } from 'recoil';
-import { userIdSelector } from '../../store/atoms/userAtom';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { GET_ALL_POSTS, GET_POST_COMMENTS } from '../../query-keys/queries';
@@ -19,7 +17,6 @@ type CommentsPanelProps = {
 }
 
 function CommentsPanel({ show, post, onClose }: CommentsPanelProps) {
-    const userId = useRecoilValue(userIdSelector);
     const queryClient = useQueryClient();
 
     const commentsWrapperRef = useRef<HTMLDivElement>(null);
@@ -34,7 +31,7 @@ function CommentsPanel({ show, post, onClose }: CommentsPanelProps) {
     const comments = data?.data || [];
 
     const addCommentMutation = useMutation(({ content }: { content: string }) =>
-        addComment(userId, post?._id, content), {
+        addComment( post?._id, content), {
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: [GET_POST_COMMENTS] });
             queryClient.invalidateQueries({ queryKey: [GET_ALL_POSTS] });

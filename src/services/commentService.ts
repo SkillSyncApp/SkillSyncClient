@@ -3,7 +3,6 @@ import { Post } from "../types/Post";
 import { headers } from "./authService";
 import { Comment } from "../types/Comment";
 import apiClient from "./httpCommon";
-import { User } from "../types/User";
 
 export const getComments = async (
   postId: Post["_id"] | undefined
@@ -14,13 +13,12 @@ export const getComments = async (
 };
 
 export const addComment = async (
-  userId: User["_id"],
   postId: Post["_id"] | undefined,
   content: string
 ): Promise<AxiosResponse<Comment>> => {
   return await apiClient.post(
     `/comments/${postId}`,
-    { content, userId },
+    { content },
     { headers: headers() }
   );
 };
