@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { userState } from "../../store/atoms/userAtom";
@@ -27,6 +27,11 @@ function AdditionalInfo() {
       },
     }
   );
+
+  useEffect(()=>{
+    if(!user) navigate("/login")
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[user])
 
   const validateForm = () => {
     if (!bio) {
