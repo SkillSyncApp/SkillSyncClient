@@ -9,6 +9,7 @@ type PostItemProps = {
   post: Post;
   onDelete?: () => void;
   onEdit?: () => void;
+  onClick?: () => void;
   comments?: {
     show: boolean;
     onClick?: () => void;
@@ -21,13 +22,15 @@ function PostItem({
   post,
   onDelete,
   onEdit,
+  onClick,
   comments,
   maxHeight,
   style,
 }: PostItemProps) {
   return (
     <article
-      className="post-item rounded-[20px] bg-white flex flex-col p-5 h-fit gap-2 drop-shadow-xl overflow-hidden"
+      onClick={onClick}
+      className="post-item rounded-[20px] bg-white flex flex-col p-5 h-fit gap-2 drop-shadow-xl overflow-hidden cursor-pointer"
       style={{ maxHeight, ...style }}
     >
       {post.image && (
@@ -45,7 +48,7 @@ function PostItem({
             className="h-[50px] w-[50px] rounded-xl"
           />
           <div>
-            <UserOverview id={post.ownerId._id} name={post.ownerId.name}/>
+            <UserOverview id={post.ownerId._id} name={post.ownerId.name} />
             <div className="opacity-50 text-sm">{post.ownerId.type}</div>
           </div>
         </div>
