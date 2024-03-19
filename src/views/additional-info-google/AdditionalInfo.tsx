@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { UserType, UpdateUserGoogleInput } from "../../types/User";
 import { updateUserBioType } from "../../services/authService";
 import { GET_ALL_POSTS } from "../../query-keys/queries";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 
 import "./AdditionalInfo.css";
 
@@ -17,6 +18,9 @@ function AdditionalInfo() {
   const [selectedType, setSelectedType] = useState("student");
   const [user, setUser] = useRecoilState(userState);
   const [bio, setBio] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const tooltipContent = "Bio must be at least 5 characters long";
 
   const updateProfileMutation = useMutation(
     (updatedUserValues: UpdateUserGoogleInput) =>
@@ -28,10 +32,10 @@ function AdditionalInfo() {
     }
   );
 
-  useEffect(()=>{
-    if(!user) navigate("/login")
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[user])
+  // useEffect(()=>{
+  //   if(!user) navigate("/login")
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[user])
 
   const validateForm = () => {
     if (!bio) {
@@ -102,11 +106,26 @@ function AdditionalInfo() {
             </label>
           </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="bio" className="block mb-2 text-sm text-gray-700">
+        <div className="mb-3 flex items-center">
+          <label htmlFor="bio" className="block text-sm text-gray-700">
             Bio
             <span className="text-red-500">*</span>
           </label>
+          <div
+            className="text-gray-500 cursor-help relative"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+            style={{ cursor: "default" }}
+          >
+            {showTooltip && (
+              <div className="absolute bottom-[30px] w-[265px] bg-white border border-gray-200 text-sm p-2 rounded shadow-lg">
+                {tooltipContent}
+              </div>
+            )}
+            <QuestionMarkCircleIcon className="w-5 h-5" />
+          </div>
+        </div>
+        <div className="mb-3 flex items-center">
           <textarea
             id="bio"
             value={bio}
@@ -115,6 +134,7 @@ function AdditionalInfo() {
             className="resize-none"
           />
         </div>
+
         <button onClick={onFillAdditionalInfo} className="mt-4 w-full">
           Register
         </button>
