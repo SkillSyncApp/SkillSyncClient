@@ -14,13 +14,12 @@ apiClient.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    console.log(error.response)
-    if (error.response && error.response.status === 401 && error.response.data === "Unauthorized" && !originalRequest._retry) {
-        await refreshTokens();
+    if (error.response && error.response.data === "Unauthorized") {
+    const accessToken = await refreshTokens();
 
       try {
         // Retry the original request with new tokens
-        originalRequest.headers.Authorization = `Bearer ${getTokens().accessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         originalRequest._retry = true;
         return apiClient(originalRequest);
       } catch (refreshError) {
