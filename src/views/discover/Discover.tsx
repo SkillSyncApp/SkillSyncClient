@@ -225,7 +225,7 @@ function Discover() {
         />
       )}
       {showEditPostDialog &&
-        editPostData && (
+        editPostData && ( 
           <EditPostDialog
             show={showEditPostDialog}
             onClose={() => setShowEditPostDialog(false)}

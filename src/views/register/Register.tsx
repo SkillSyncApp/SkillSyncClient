@@ -2,7 +2,8 @@ import { ChangeEvent, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useMutation } from "react-query";
 import { register as registerRequest } from "../../services/authService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import Joi from "joi";
 import { Tooltip } from "react-tooltip";
 import {
@@ -86,7 +87,7 @@ function Register() {
               className="inline-block ml-1 text-gray-500 cursor-help relative"
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
-              style={{ cursor: 'default' }}
+              style={{ cursor: "default" }}
             >
               {showTooltip && (
                 <div className="absolute bottom-[30px] w-[265px] bg-white border border-gray-200 text-sm p-2 rounded shadow-lg">
@@ -243,6 +244,16 @@ function Register() {
         <button onClick={register} className="mt-4 w-full">
           Register
         </button>
+
+        <div className="text-center pt-8 text-sm">
+          <p>
+            {" "}
+            Already have an account?{" "}
+            <Link to="/login" replace className="underline">
+              login here
+            </Link>
+          </p>
+        </div>
       </div>
       <Toaster />
     </div>
