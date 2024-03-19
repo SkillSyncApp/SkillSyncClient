@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { userState } from "../../store/atoms/userAtom";
-import { useRecoilState } from "recoil";
-import { useMutation, useQueryClient } from "react-query";
-import { UserType, UpdateUserGoogleInput } from "../../types/User";
-import { updateUserBioType } from "../../services/authService";
-import { GET_ALL_POSTS } from "../../query-keys/queries";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { GET_ALL_POSTS } from "../../query-keys/queries";
+import { updateUserBioType } from "../../services/authService";
+import { userState } from "../../store/atoms/userAtom";
+import { UpdateUserGoogleInput, UserType } from "../../types/User";
 
 import "./AdditionalInfo.css";
 
