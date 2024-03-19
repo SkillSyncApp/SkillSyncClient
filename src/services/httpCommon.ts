@@ -1,5 +1,5 @@
 import axios from "axios";
-import { saveTokens, refresh, getTokens } from "../services/authService";
+import { saveTokens, refresh } from "../services/authService";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_API_URL + "/api",
@@ -14,12 +14,12 @@ apiClient.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    console.log(error.response.data)
     if (error.response && error.response.data === "Unauthorized") {
-        await refreshTokens();
+    const accessToken = await refreshTokens();
 
       try {
         // Retry the original request with new tokens
+        console.log(accessToken)
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         originalRequest._retry = true;
         return apiClient(originalRequest);
