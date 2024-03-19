@@ -176,6 +176,7 @@ function Discover() {
                 onDelete: () => deleteUserPost(post._id),
                 onEdit: () => editUserPost(post), // Added onEdit prop
               })}
+              onClick={() => showComments(post)}
             />
           ))}
         </Masonry>
