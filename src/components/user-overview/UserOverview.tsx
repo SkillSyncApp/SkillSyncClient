@@ -2,17 +2,17 @@ import {
   ChatBubbleOvalLeftIcon as InboxIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import useConversationWith from "../../hooks/useConversationWith";
 import { GET_USER_BY_ID } from "../../query-keys/queries";
 import { getUserById } from "../../services/userService";
+import { userState } from "../../store/atoms/userAtom";
 import { User } from "../../types/User";
 import ProfileImage from "../profile-image/ProfileImage";
 import Dialog from "../shared/dialog/Dialog";
-import { useNavigate } from "react-router-dom";
-import useConversationWith from "../../hooks/useConversationWith";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../store/atoms/userAtom";
 
 type UserOverviewProps = {
   id: User["_id"];
@@ -37,12 +37,16 @@ function UserOverview({ id, name }: UserOverviewProps) {
 
   const userData: User | undefined = profileData?.data;
 
-  const openProfile = () => {
+  const openProfile: MouseEventHandler<HTMLHeadingElement> = (event) => {
+    event.stopPropagation();
+
     if (currentUser._id !== userData?._id) {
       setShowProfileDialog(true);
     } else {
       navigate("profile");
     }
+
+    return event;
   };
 
   const getFirstName = (user: User) => user.name.split(" ")[0];

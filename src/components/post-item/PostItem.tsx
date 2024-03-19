@@ -54,7 +54,7 @@ function PostItem({
         </div>
         <div className="flex gap-1">
           {onDelete && (
-            <div className="group cursor-pointer" onClick={onDelete}>
+            <div className="group cursor-pointer" onClick={(event) => {event.stopPropagation(); onDelete()}}>
               <TrashIcon
                 title="delete post"
                 className="opacity-60 group-hover:-translate-y-[2px] transition-all"
@@ -64,7 +64,7 @@ function PostItem({
             </div>
           )}
           {onEdit && (
-            <div className="group cursor-pointer" onClick={onEdit}>
+            <div className="group cursor-pointer" onClick={(event) => {event.stopPropagation(); onEdit()}}>
               <PencilIcon
                 title="edit post"
                 className="opacity-60 group-hover:-translate-y-[2px] transition-all"
