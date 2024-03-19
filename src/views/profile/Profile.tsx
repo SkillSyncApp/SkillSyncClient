@@ -36,7 +36,7 @@ function Profile() {
   useEffect(() => {
     if (user.type == "unknown" || user.bio == "")
       navigate("/logInGoogle", { replace: true });
-  }, [user.type, user.bio]);
+    }, [user.type, user.bio]);
 
   const logout = async () => {
     try {

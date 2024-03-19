@@ -12,8 +12,8 @@ import { userState } from "../../store/atoms/userAtom";
 import "./Login.css";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
-import Lottie from 'react-lottie';
-import ComputerAnimation from './computer-animation.json';
+import Lottie from "react-lottie";
+import ComputerAnimation from "./computer-animation.json";
 
 function Login() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ function Login() {
 
       navigate("/", { replace: true });
     } catch (err) {
-      toast.error("Login failed");
+      toast.error("Incorrect email or password.\nPlease try again");
     }
   };
 
@@ -60,7 +60,7 @@ function Login() {
         refreshToken: loginGoogleRes.refreshToken,
       });
       setUser(loginGoogleRes.user);
-      
+
       if (response.data.user?.type === "unknown")
         navigate("/logInGoogle", { replace: true });
       else navigate("/", { replace: true });
@@ -70,14 +70,18 @@ function Login() {
   };
 
   const onGoogleLoginFailure = () => {
-    console.log("failed google log in");
+    toast.error("Sorry, we have an issue logging in via Google");
   };
 
   return (
     <div className="h-[100vh] bg-primary flex items-center justify-center flex flex-col font-display">
       <div className="w-[500px] bg-white rounded-[20px] drop-shadow-lg py-[30px] px-[50px]">
         <div className="text-center mb-5 text-primary">
-            <Lottie isClickToPauseDisabled options={{ animationData: ComputerAnimation }} style={{ width: 400, height: 200 }}/>
+          <Lottie
+            isClickToPauseDisabled
+            options={{ animationData: ComputerAnimation }}
+            style={{ width: 400, height: 200 }}
+          />
           <p className="opacity-60">welcome to</p>
           <h1 className="font-bold text-4xl">SKILLSYNC</h1>
         </div>

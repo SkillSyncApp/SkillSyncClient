@@ -5,7 +5,11 @@ import { register as registerRequest } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import Joi from "joi";
 import { Tooltip } from "react-tooltip";
-import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
+import {
+  EyeSlashIcon,
+  EyeIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/solid";
 
 import "./Register.css";
 
@@ -19,6 +23,9 @@ function Register() {
   const [bio, setBio] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const tooltipContent = "Bio must be at least 5 characters long";
 
   const schema = Joi.object({
     name: Joi.string()
@@ -39,7 +46,7 @@ function Register() {
       "any.required": "Please fill in all fields",
     }),
     bio: Joi.string().min(5).required().messages({
-      "string.min": "Bio must be at least 5 characters long",
+      "string.min": tooltipContent,
       "any.required": "Please fill in all fields",
     }),
   });
@@ -66,6 +73,7 @@ function Register() {
       <div className="mb-3">
         <label htmlFor={id} className="block mb-2 text-sm text-gray-700">
           {label}
+          <span className="text-red-500">*</span>
           <Tooltip id={`${tooltipKey}-tooltip`}>
             {
               validationResult.error?.details.find(
@@ -73,6 +81,21 @@ function Register() {
               )?.message
             }
           </Tooltip>
+          {id === "bio" && (
+            <div
+              className="inline-block ml-1 text-gray-500 cursor-help relative"
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+              style={{ cursor: 'default' }}
+            >
+              {showTooltip && (
+                <div className="absolute bottom-[30px] w-[265px] bg-white border border-gray-200 text-sm p-2 rounded shadow-lg">
+                  {tooltipContent}
+                </div>
+              )}
+              <QuestionMarkCircleIcon className="w-5 h-5" />
+            </div>
+          )}
         </label>
         <div className="relative">
           <input
