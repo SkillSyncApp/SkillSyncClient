@@ -14,8 +14,8 @@ apiClient.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    console.log(error.response)
-    if (error.response && error.response.status === 401 && error.response.data === "Unauthorized" && !originalRequest._retry) {
+    console.log(error.response.data)
+    if (error.response && error.response.data === "Unauthorized" && !originalRequest._retry) {
         await refreshTokens();
 
       try {
@@ -27,9 +27,6 @@ apiClient.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-    
-    // If the error is not due to an expired token, return the error
-    return Promise.reject(error);
   }
 );
 
