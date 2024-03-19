@@ -1,5 +1,5 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -32,10 +32,10 @@ function AdditionalInfo() {
     }
   );
 
-  // useEffect(()=>{
-  //   if(!user) navigate("/login")
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[user])
+  useEffect(()=>{
+    if(!user) navigate("/login")
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[user])
 
   const validateForm = () => {
     if (!bio) {
@@ -87,6 +87,7 @@ function AdditionalInfo() {
             <label>
               <input
                 type="radio"
+                className="appearance-none bg-[#d5d5d5] checked:bg-[#aaaaaa] border-[6px] scale-[0.8] rounded-[20px] border-[#d5d5d5]"
                 value="student"
                 checked={
                   selectedType === "student" || selectedType == "unknown"
@@ -98,6 +99,7 @@ function AdditionalInfo() {
             <label>
               <input
                 type="radio"
+                className="appearance-none bg-[#d5d5d5] checked:bg-[#aaaaaa] border-[6px] scale-[0.8] rounded-[20px] border-[#d5d5d5]"
                 value="company"
                 checked={selectedType === "company"}
                 onChange={() => setSelectedType("company")}

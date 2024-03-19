@@ -213,6 +213,7 @@ function Register() {
               <input
                 type="radio"
                 value="student"
+                className="appearance-none bg-[#d5d5d5] checked:bg-[#aaaaaa] border-[6px] scale-[0.8] rounded-[20px] border-[#d5d5d5]"
                 checked={selectedType === "student"}
                 onChange={() => setSelectedType("student")}
               />
@@ -222,6 +223,7 @@ function Register() {
               <input
                 type="radio"
                 value="company"
+                className="appearance-none bg-[#d5d5d5] checked:bg-[#aaaaaa] border-[6px] scale-[0.8] rounded-[20px] border-[#d5d5d5]"
                 checked={selectedType === "company"}
                 onChange={() => setSelectedType("company")}
               />

@@ -48,7 +48,6 @@ function Inbox() {
 
     const onNewMessage = useCallback(
         (data: RecieveNewMessageResponse) => {
-            console.log({ newMessage: data });
             const {
                 conversationId,
                 _id: messageId,
@@ -58,14 +57,9 @@ function Inbox() {
             } = data;
 
             if (senderId !== user._id) {
-                console.log(
-                    `Got message on conversation ${conversationId}, contenet: ${content}, while selected is ${selectedConversationId}`
-                );
                 if (conversationId === selectedConversationId) {
-                    console.log("new message to display on current chat: ", content);
 
                     const conversation = conversations.find(({ _id }) => _id === selectedConversationId);
-                    console.log({ selectedConversationId, conversations, conversation });
                     if (conversation) {
                         const conversationLead = conversation.users.find(
                             (conversationUser) => conversationUser._id !== user._id
@@ -82,7 +76,6 @@ function Inbox() {
                         }
                     }
                 } else {
-                    console.log("new message to display on background chat: ", content);
                     const newConversations: Conversation[] = [...conversations];
                     const conversation = newConversations.find(
                         (conversation) => conversation._id === conversationId
