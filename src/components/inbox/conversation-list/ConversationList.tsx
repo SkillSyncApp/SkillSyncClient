@@ -79,7 +79,7 @@ function ConversationList({
 
     return (
         <div
-            className={`bg-white drop-shadow-lg z-10 ${loading || conversations.length !== 0 ? "w-[300px]" : ""
+            className={`bg-white drop-shadow-lg z-10 flex flex-col ${loading || conversations.length !== 0 ? "w-[300px]" : ""
                 }`}
         >
             {loading && conversationsSkeletonRenderer()}
@@ -93,7 +93,7 @@ function ConversationList({
                     Start new conversation
                 </div>
             )}
-            <div className="conversation-container h-[750px] overflow-y-auto order rounded-lg">
+            <div className="conversation-container overflow-y-auto order rounded-lg flex-1">
                 {conversations.map(conversationRenderer)}
             </div>
         </div>
