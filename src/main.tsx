@@ -13,12 +13,9 @@ if (!googleClientId) {
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  //TODO
   <GoogleOAuthProvider clientId={googleClientId}>
-    {/* <React.StrictMode> */}
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
-    {/* </React.StrictMode>   */}
   </GoogleOAuthProvider>
 );
