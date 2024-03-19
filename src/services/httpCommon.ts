@@ -14,7 +14,8 @@ apiClient.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    console.log(error.response)
+    if (error.response && error.response.status === 401 && error.response.data === "Unauthorized" && !originalRequest._retry) {
         await refreshTokens();
 
       try {
