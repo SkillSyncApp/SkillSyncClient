@@ -46,7 +46,7 @@ function SideNavBar() {
         to="/inbox"
       >
         {({ isActive }) => (
-          <>{ICON_PER_STATE.inbox[isActive ? "active" : "static"]}inbox</>
+          <>{ICON_PER_STATE.inbox[isActive ? "active" : "static"]}Inbox</>
         )}
       </NavLink>
       <NavLink
@@ -56,7 +56,7 @@ function SideNavBar() {
         to="/profile"
       >
         {({ isActive }) => (
-          <>{ICON_PER_STATE.profile[isActive ? "active" : "static"]}profile</>
+          <>{ICON_PER_STATE.profile[isActive ? "active" : "static"]}Profile</>
         )}
       </NavLink>
     </nav>
