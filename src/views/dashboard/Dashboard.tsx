@@ -6,11 +6,11 @@ import { Toaster } from "react-hot-toast";
 function Dashboard() {
   return (
     <div
-      className="bg-primary font-display flex flex-col overflow-hidden h-[100vh]"
+      className="bg-primary font-display flex flex-col overflow-hidden h-[100vh] pb-[20px]"
       style={{ isolation: "isolate" }}
     >
       <NavBar />
-      <main className="bg-lightgray rounded-[20px] mx-5 flex flex-1">
+      <main className="bg-lightgray rounded-[20px] mx-5 flex flex-1 overflow-hidden">
         <div className="w-[250px] bg-white drop-shadow-lg z-20">
           <SideNavBar />
         </div>
