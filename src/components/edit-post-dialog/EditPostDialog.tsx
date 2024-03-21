@@ -43,9 +43,9 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
     }
   }, [post, show]);
 
-  useEffect(()=> {
-    console.log(post)
-  },[post])
+  useEffect(() => {
+    console.log(post);
+  }, [post]);
 
   const updatePostData = async () => {
     try {
@@ -63,7 +63,14 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
       // }
       // console.log("update post" + updatedPost.image);
 
-      await updatePostMutation.mutateAsync({title, content, image});
+      /*  if (!isImageRemoved && (image !== null || image != undefined)) {
+        post.image = image;
+      } else {
+        post.image = undefined;
+      }
+      */
+
+      await updatePostMutation.mutateAsync({ title, content, image });
       toast.success("Post updated successfully");
       onClose();
     } catch (error) {
@@ -97,7 +104,11 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
 
   const handleRemoveImage = () => {
     setIsImageRemoved(true);
-    setImage(undefined);
+    setImage(
+      null as unknown as
+        | { originalName: string; serverFilename: string }
+        | undefined
+    );
   };
 
   return (
