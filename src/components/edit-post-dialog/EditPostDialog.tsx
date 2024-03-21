@@ -25,7 +25,6 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
   const [image, setImage] = useState(post.image);
-  const [isImageRemoved, setIsImageRemoved] = useState(false);
 
   const updatePostMutation = useMutation(
     (updatedPost: Partial<Post>) => updatePost(post._id, updatedPost),
@@ -39,13 +38,8 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
   useEffect(() => {
     if (post) {
       setImage(post.image);
-      setIsImageRemoved(false);
     }
   }, [post, show]);
-
-  useEffect(() => {
-    console.log(post);
-  }, [post]);
 
   const updatePostData = async () => {
     try {
@@ -53,22 +47,6 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
         toast.error("Title and content must not be empty");
         return;
       }
-
-      // if (!isImageRemoved) {
-      //   updatedPost.image = image;
-      //   setImage(image)
-      // } else {
-      //   updatedPost.image = undefined
-      //   setImage(undefined)
-      // }
-      // console.log("update post" + updatedPost.image);
-
-      /*  if (!isImageRemoved && (image !== null || image != undefined)) {
-        post.image = image;
-      } else {
-        post.image = undefined;
-      }
-      */
 
       await updatePostMutation.mutateAsync({ title, content, image });
       toast.success("Post updated successfully");
@@ -103,7 +81,6 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
   };
 
   const handleRemoveImage = () => {
-    setIsImageRemoved(true);
     setImage(
       null as unknown as
         | { originalName: string; serverFilename: string }
