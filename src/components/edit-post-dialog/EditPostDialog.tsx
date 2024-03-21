@@ -8,6 +8,7 @@ import { Post } from "../../types/Post";
 import ButtonGenerateContentAI from "../shared/button-generate-ai/ButtonGenerateContentAI";
 import Dialog from "../shared/dialog/Dialog";
 import { truncateMiddle } from "../../utils/truncate";
+import { XCircleIcon } from "@heroicons/react/24/solid";
 
 import "./EditPostDialog.css";
 
@@ -24,6 +25,7 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
   const [image, setImage] = useState(post.image);
+  const [isImageRemoved, setIsImageRemoved] = useState(false);
 
   const updatePostMutation = useMutation(
     (updatedPost: Partial<Post>) => updatePost(post._id, updatedPost),
@@ -35,10 +37,15 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
   );
 
   useEffect(() => {
-    if (post.image) {
+    if (post) {
       setImage(post.image);
+      setIsImageRemoved(false);
     }
-  }, [post.image]);
+  }, [post, show]);
+
+  useEffect(()=> {
+    console.log(post)
+  },[post])
 
   const updatePostData = async () => {
     try {
@@ -47,7 +54,16 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
         return;
       }
 
-      await updatePostMutation.mutateAsync({ title, content, image });
+      // if (!isImageRemoved) {
+      //   updatedPost.image = image;
+      //   setImage(image)
+      // } else {
+      //   updatedPost.image = undefined
+      //   setImage(undefined)
+      // }
+      // console.log("update post" + updatedPost.image);
+
+      await updatePostMutation.mutateAsync({title, content, image});
       toast.success("Post updated successfully");
       onClose();
     } catch (error) {
@@ -62,7 +78,9 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
     }
   };
 
-  const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedImage = e.target.files?.[0];
 
     const maxSize = 10 * 1024 * 1024; // 10MB - adjust as needed
@@ -75,6 +93,11 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
       const image = await uploadImage(selectedImage);
       setImage(image?.data);
     }
+  };
+
+  const handleRemoveImage = () => {
+    setIsImageRemoved(true);
+    setImage(undefined);
   };
 
   return (
@@ -114,11 +137,8 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
           <label htmlFor="image" className="block mb-2 text-sm text-gray-700">
             Image (optional)
           </label>
-          <div className="flex items-center gap-2">
-            <label
-              htmlFor="image"
-              className="input_image cursor-pointer rounded-sm"
-            >
+          <div className="flex items-center gap-2 flex">
+            <div className="input_image justify-between flex items-center rounded-sm">
               <button
                 className="btn_upload_image"
                 onClick={handleUpdateImageChange}
@@ -126,17 +146,23 @@ function EditPostDialog({ show, onClose, post }: EditPostDialogProps) {
                 Choose File
               </button>
               <span className="text-base ml-1">
-                {truncateMiddle(image?.originalName || "No file chosen", 32)}
+                {truncateMiddle(image?.originalName || "No file chosen", 27)}
               </span>
-              <input
-                id="image"
-                type="file"
-                ref={inputFileRef}
-                accept=".png, .jpg, .jpeg, .svg"
-                onChange={handleFileInputChange}
-                className="hidden" // Hide the file input visually
+              <XCircleIcon
+                onClick={handleRemoveImage}
+                width={20}
+                height={20}
+                className="ml-2 cursor-pointer"
               />
-            </label>
+            </div>
+            <input
+              id="image"
+              type="file"
+              ref={inputFileRef}
+              accept=".png, .jpg, .jpeg, .svg"
+              onChange={handleFileInputChange}
+              className="hidden" // Hide the file input visually
+            />
           </div>
         </div>
         <button onClick={updatePostData}>Update</button>
